@@ -63,16 +63,20 @@
   /* ---------- Orderable product card ---------- */
   function card(p, idx) {
     var first = Catalog.firstInStock(p);
+    /* Use the size-specific image if provided, else fall back to the product image. */
+    var firstImg = (first.image || p.image);
     var chips = p.sizes.map(function (s, i) {
       var id = "sz-" + p.id + "-" + i;
+      /* Embed the per-size image path as a data attribute so the JS can swap it. */
+      var imgAttr = s.image ? ' data-img="' + esc(s.image) + '"' : "";
       return '<label class="size-chip" for="' + id + '"><input type="radio" id="' + id + '" name="size-' + esc(p.id) + '" value="' + esc(s.label) + '"' +
-        (s === first ? " checked" : "") + (s.stock > 0 ? "" : " disabled") + '><span>' + esc(s.label) + "</span></label>";
+        (s === first ? " checked" : "") + (s.stock > 0 ? "" : " disabled") + imgAttr + '><span>' + esc(s.label) + "</span></label>";
     }).join("");
     var st = Catalog.stockText(first);
     var soldOut = Catalog.isSoldOut(p);
     return '<article class="product-card reveal reveal-delay-' + (idx % 3) + '" data-id="' + esc(p.id) + '">' +
       '<div class="product-media">' + (p.badge ? '<span class="product-badge">' + esc(p.badge) + "</span>" : "") +
-      '<img src="' + esc(p.image) + '" alt="' + esc(p.englishName || p.name) + ' jar" loading="lazy" width="400" height="480"></div>' +
+      '<img src="' + esc(firstImg) + '" alt="' + esc(p.englishName || p.name) + ' jar" loading="lazy" width="400" height="480" data-product-img></div>' +
       '<div class="product-body">' +
       '<div class="product-variety">' + esc(p.variety) + "</div>" +
       "<h3>" + Catalog.script(p.name) + "</h3>" +
@@ -119,7 +123,19 @@
         var stock = el.querySelector("[data-stock]");
         stock.textContent = st.text; stock.className = "stock-note " + st.cls;
         el.querySelector("[data-order]").href = "order.html?product=" + encodeURIComponent(p.id) + "&size=" + encodeURIComponent(s.label);
+        /* Swap product image if this size has its own image. */
+        var newImg = e.target.getAttribute("data-img") || p.image;
+        var imgEl = el.querySelector("[data-product-img]");
+        if (imgEl && newImg && imgEl.getAttribute("src") !== newImg) {
+          imgEl.style.opacity = "0";
+          imgEl.src = newImg;
+          imgEl.onload = function () { imgEl.style.opacity = "1"; };
+          imgEl.onerror = function () { imgEl.style.opacity = "1"; }; /* show broken img rather than hide */
+        }
       });
+      /* Fire change once for the pre-checked size so the correct image loads on page open. */
+      var checked = el.querySelector('input[type="radio"]:checked');
+      if (checked) checked.dispatchEvent(new Event("change", { bubbles: true }));
     });
     root.querySelectorAll(".reveal").forEach(function (el) { if (window.observeReveal) window.observeReveal(el); });
   }
