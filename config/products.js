@@ -33,12 +33,13 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "variety": "Apis cerana indica",
       "source": "Bee colonies and the flowering trees around our garden",
       "description": "Our signature honey — thick, dark amber with a rich, lingering taste that changes gently with each season's flowering. Collected in small batches and bottled by hand at the garden.",
+      "image": "assets/images/farm/250g.jpeg",
       "badge": "Our signature",
       "available": true,
       "sizes": [
-           { "label": "250 g", "price": 130, "stock": 40, "image": "assets/images/farm/250g.jpeg" }
-           { "label": "500 g", "price": 250, "stock": 30, "image": "assets/images/farm/500g.jpeg" }
-           { "label": "1 kg",  "price": 500, "stock": 18, "image": "assets/images/farm/kg.jpeg"  }
+        { "label": "250 g", "price": 130, "stock": 40, "image": "assets/images/farm/250g.jpeg" },
+        { "label": "500 g", "price": 250, "stock": 30, "image": "assets/images/farm/500g.jpeg" },
+        { "label": "1 kg",  "price": 500, "stock": 18, "image": "assets/images/farm/kg.jpeg"  }
       ]
     }
   ],
