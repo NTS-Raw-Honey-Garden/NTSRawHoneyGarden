@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 
 # EDIT: change to your live address after deploying
-Sitemap: https://yourusername.github.io/honey-farm-website/sitemap.xml
+Sitemap: https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden/sitemap.xml

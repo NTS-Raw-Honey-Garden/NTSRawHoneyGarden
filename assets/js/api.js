@@ -42,12 +42,12 @@
     });
   }
 
-  function localRef() {
+  function localRef(prefix) {
     var d = new Date();
     var ymd = d.getFullYear().toString().slice(2) + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0");
     var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", r = "";
     for (var i = 0; i < 4; i++) r += chars[Math.floor(Math.random() * chars.length)];
-    return "WA-" + ymd + "-" + r;
+    return (prefix || "WA") + "-" + ymd + "-" + r;
   }
 
   window.OrderAPI = {
@@ -57,9 +57,18 @@
     submit: function (order) {
       if (!C.orderBackendUrl) {
         // WhatsApp mode: nothing is stored. The customer sends the summary to the farm.
-        return Promise.resolve({ ok: true, mode: "whatsapp", ref: localRef() });
+        return Promise.resolve({ ok: true, mode: "whatsapp", ref: localRef("WA") });
       }
       return post({ action: "createOrder", order: order, paymentProvider: (C.payment || {}).provider || "none" });
+    },
+
+    /* request = { requestItems:[id,...], customer:{...}, delivery:{city}, message, consent, marketingOptIn }
+       Used for items we don't sell off the shelf — we call the customer back. */
+    submitRequest: function (request) {
+      if (!C.orderBackendUrl) {
+        return Promise.resolve({ ok: true, mode: "whatsapp", ref: localRef("WR") });
+      }
+      return post({ action: "createRequest", order: request });
     },
 
     confirmPayment: function (payload) {

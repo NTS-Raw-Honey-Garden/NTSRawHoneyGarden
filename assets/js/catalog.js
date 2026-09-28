@@ -1,19 +1,29 @@
 /* =====================================================================
-   catalog.js — reads config/products.js and draws product cards.
-   Also shared by the order page (pricing helpers live here).
+   catalog.js — reads config/products.js and draws the product blocks.
+   Also holds the pricing helpers used by the order page.
    ===================================================================== */
 (function () {
   "use strict";
   var C = window.SITE_CONFIG || {};
+  var DATA = window.HONEY_PRODUCTS || {};
   var esc = window.escapeHtml;
   var LOW_STOCK = 5;
 
   var Catalog = {
     all: function () {
-      return ((window.HONEY_PRODUCTS || {}).products || []).filter(function (p) { return p.available !== false; });
+      return (DATA.products || []).filter(function (p) { return p.available !== false; });
+    },
+    requests: function () {
+      return (DATA.requestItems || []).filter(function (p) { return p.available !== false; });
+    },
+    soon: function () {
+      return (DATA.comingSoon || []).filter(function (p) { return p.available !== false; });
     },
     find: function (id) {
       return Catalog.all().filter(function (p) { return p.id === id; })[0] || null;
+    },
+    findRequest: function (id) {
+      return Catalog.requests().filter(function (p) { return p.id === id; })[0] || null;
     },
     size: function (product, label) {
       if (!product) return null;
@@ -29,7 +39,7 @@
       return p.sizes.filter(function (s) { return s.stock > 0; })[0] || p.sizes[0];
     },
     stockText: function (size) {
-      if (!size || !(size.stock > 0)) return { cls: "out", text: "Sold out — back next harvest" };
+      if (!size || !(size.stock > 0)) return { cls: "out", text: "Sold out — back next season" };
       if (size.stock <= LOW_STOCK) return { cls: "low", text: "Only " + size.stock + " left" };
       return { cls: "", text: "In stock · " + size.stock + " available" };
     },
@@ -38,12 +48,19 @@
       if (!subtotal) return 0;
       if (C.freeDeliveryAbove && subtotal >= C.freeDeliveryAbove) return 0;
       return Number(C.deliveryFee || 0);
+    },
+    /* Wraps Malayalam characters so they get the right font. */
+    script: function (name) {
+      return esc(name).replace(/[ഀ-ൿ][ഀ-ൿ\s]*/g, function (m) {
+        return '<span class="mal">' + m + "</span>";
+      });
     }
   };
   window.Catalog = Catalog;
 
   var leafIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19l8-8"/></svg>';
 
+  /* ---------- Orderable product card ---------- */
   function card(p, idx) {
     var first = Catalog.firstInStock(p);
     var chips = p.sizes.map(function (s, i) {
@@ -55,10 +72,10 @@
     var soldOut = Catalog.isSoldOut(p);
     return '<article class="product-card reveal reveal-delay-' + (idx % 3) + '" data-id="' + esc(p.id) + '">' +
       '<div class="product-media">' + (p.badge ? '<span class="product-badge">' + esc(p.badge) + "</span>" : "") +
-      '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + ' jar" loading="lazy" width="400" height="480"></div>' +
+      '<img src="' + esc(p.image) + '" alt="' + esc(p.englishName || p.name) + ' jar" loading="lazy" width="400" height="480"></div>' +
       '<div class="product-body">' +
       '<div class="product-variety">' + esc(p.variety) + "</div>" +
-      "<h3>" + esc(p.name) + "</h3>" +
+      "<h3>" + Catalog.script(p.name) + "</h3>" +
       '<p class="product-tagline">' + esc(p.tagline) + "</p>" +
       '<p class="product-desc">' + esc(p.description) + "</p>" +
       '<p class="product-source">' + leafIcon + "<span><strong>Source:</strong> " + esc(p.source) + "</span></p>" +
@@ -66,13 +83,34 @@
       '<div class="product-foot"><div><div class="price" data-price>' + Catalog.money(first.price) + "</div>" +
       '<div class="stock-note ' + st.cls + '" data-stock>' + st.text + "</div></div>" +
       '<a class="btn btn-primary btn-small" data-order href="order.html?product=' + encodeURIComponent(p.id) + "&size=" + encodeURIComponent(first.label) + '"' +
-      (soldOut ? ' aria-disabled="true" style="pointer-events:none;opacity:.5"' : "") + ">" + (soldOut ? "Sold out" : "Book / Order") + "</a></div>" +
+      (soldOut ? ' aria-disabled="true" style="pointer-events:none;opacity:.5"' : "") + ">" + (soldOut ? "Sold out" : "Order now") + "</a></div>" +
       "</div></article>";
+  }
+
+  /* ---------- Request-only card ---------- */
+  function requestCard(p, idx) {
+    return '<article class="request-card reveal reveal-delay-' + (idx % 3) + '">' +
+      '<div class="product-media"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" width="400" height="460"></div>' +
+      '<div class="product-body">' +
+      (p.note ? '<span class="request-note">' + esc(p.note) + "</span>" : "") +
+      "<h3>" + Catalog.script(p.name) + "</h3>" +
+      '<p class="product-tagline">' + esc(p.tagline) + "</p>" +
+      '<p class="product-desc">' + esc(p.description) + "</p>" +
+      '<a class="btn btn-ghost btn-small" href="order.html?request=' + encodeURIComponent(p.id) + '">Request this <span class="arrow" aria-hidden="true">→</span></a>' +
+      "</div></article>";
+  }
+
+  /* ---------- Coming soon ---------- */
+  function soonCard(p) {
+    return '<div class="coming-soon reveal">' +
+      '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy">' +
+      '<div><span class="tag">Coming soon</span><h3>' + esc(p.name) + "</h3><p>" + esc(p.description) + "</p></div></div>";
   }
 
   function bind(root) {
     root.querySelectorAll(".product-card").forEach(function (el) {
       var p = Catalog.find(el.getAttribute("data-id"));
+      if (!p) return;
       el.addEventListener("change", function (e) {
         if (!e.target.matches('input[type="radio"]')) return;
         var s = Catalog.size(p, e.target.value);
@@ -86,7 +124,7 @@
     root.querySelectorAll(".reveal").forEach(function (el) { if (window.observeReveal) window.observeReveal(el); });
   }
 
-  /* Any element with data-products="all" or data-products="3" gets cards. */
+  /* Render into any element carrying one of these attributes. */
   document.querySelectorAll("[data-products]").forEach(function (root) {
     var limit = root.getAttribute("data-products");
     var list = Catalog.all();
@@ -94,14 +132,24 @@
     root.innerHTML = list.length ? list.map(card).join("") : "<p>New harvest coming soon — check back shortly.</p>";
     bind(root);
   });
+  document.querySelectorAll("[data-request-items]").forEach(function (root) {
+    root.innerHTML = Catalog.requests().map(requestCard).join("");
+    bind(root);
+  });
+  document.querySelectorAll("[data-coming-soon]").forEach(function (root) {
+    var list = Catalog.soon();
+    if (!list.length) { root.hidden = true; return; }
+    root.innerHTML = list.map(soonCard).join("");
+    bind(root);
+  });
 
-  /* SEO: structured data for products (helps Google show prices). */
-  if (document.querySelector('[data-products="all"]')) {
+  /* SEO: structured data for the orderable products. */
+  if (document.querySelector("[data-products]")) {
     var ld = {
       "@context": "https://schema.org",
       "@graph": Catalog.all().map(function (p) {
         return {
-          "@type": "Product", name: p.name, description: p.description, category: p.variety,
+          "@type": "Product", name: (p.englishName || p.name), description: p.description, category: p.variety,
           image: (C.siteUrl || "") + "/" + p.image,
           brand: { "@type": "Brand", name: C.farmName },
           offers: p.sizes.map(function (s) {

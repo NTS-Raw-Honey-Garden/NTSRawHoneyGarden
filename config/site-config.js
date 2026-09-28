@@ -8,22 +8,23 @@
 window.SITE_CONFIG = {
 
   /* ---------- Farm identity ---------- */
-  farmName: "Madhuvana Raw Honey",        // Your brand / farm name
-  tagline: "Raw honey, straight from our hives",
-  foundedYear: "2014",
-  region: "Your District, Your State, India",   // Shown on About page
-  regionShort: "Your District",
+  farmName: "NTS Honey Garden",
+  tagline: "Raw. Pure. Golden.",
+  strapline: "From Our Hive to Your Home",
+  foundedYear: "2018",
+  region: "Your District, Kerala, India",          // Shown on the About page
+  regionShort: "Kerala",
 
   /* ---------- Contact details (shown on site & order confirmation) ---------- */
   phone: "+91 90000 00000",              // Shown to customers
   whatsappNumber: "919000000000",         // Country code + number, digits only (no + or spaces)
-  email: "hello@yourfarm.in",
-  address: "Farm Road, Your Village, Your District, Your State – 000000",
+  email: "hello@ntshoneygarden.in",
+  address: "Your Address, Your Village, Your District, Kerala – 000000",
   businessHours: "Mon–Sat, 9:00 am – 6:00 pm",
   fssaiLicense: "FSSAI Lic. No. 00000000000000",   // Add your FSSAI registration number
 
   /* ---------- Social links (leave "" to hide) ---------- */
-  instagram: "https://instagram.com/yourfarm",
+  instagram: "https://instagram.com/ntshoneygarden",
   facebook: "",
   youtube: "",
 
@@ -52,13 +53,13 @@ window.SITE_CONFIG = {
      "razorpay" = online payment (see documentation/06-future-features.md before switching) */
   payment: {
     provider: "none",
-    upiId: "yourfarm@upi",       // Shown in confirmation as a payment option (leave "" to hide)
-    razorpayKeyId: ""            // PUBLIC key id only. Never put a secret key in this file.
+    upiId: "ntshoneygarden@upi",   // Shown in confirmation as a payment option (leave "" to hide)
+    razorpayKeyId: ""              // PUBLIC key id only. Never put a secret key in this file.
   },
 
   /* ---------- SEO ---------- */
-  siteUrl: "https://yourusername.github.io/honey-farm-website",   // Change after deploying / adding a domain
-  metaDescription: "Small-batch raw honey from our own hives — unheated, unfiltered and bottled by hand. Order wildflower, forest and moringa honey online.",
+  siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",   // Change if your address changes
+  metaDescription: "Raw, pure, golden honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) Indian rock bee honey in 250 g, 500 g and 1 kg. Order online.",
 
   /* ---------- Analytics (optional) ----------
      Paste a Google Analytics 4 Measurement ID like "G-XXXXXXX" to enable. */

@@ -11,7 +11,7 @@
   var NAV = [
     { href: "index.html", label: "Home" },
     { href: "about.html", label: "Our Farm" },
-    { href: "products.html", label: "Our Honey" },
+    { href: "benefits.html", label: "Health Benefits" },
     { href: "harvest.html", label: "How We Harvest" }
   ];
 
@@ -28,7 +28,7 @@
   var brandHtml =
     '<a class="brand" href="index.html" aria-label="' + esc(C.farmName) + ' – home">' +
     '<img src="assets/images/logo.svg" alt="" width="42" height="42">' +
-    '<span class="brand-name">' + esc(C.farmName) + '<small>Est. ' + esc(C.foundedYear) + ' · Raw & Unheated</small></span></a>';
+    '<span class="brand-name">' + esc(C.farmName) + '<small>Est. ' + esc(C.foundedYear) + ' · Raw. Pure. Golden.</small></span></a>';
 
   // ---------- Header ----------
   var header = document.getElementById("site-header");
@@ -70,10 +70,10 @@
     footer.innerHTML =
       '<div class="wrap"><div class="footer-grid">' +
       '<div class="footer-brand">' + brandHtml +
-      "<p>" + esc(C.tagline) + ". Small-batch honey from our own hives in " + esc(C.regionShort) + ", bottled by hand and never heated.</p>" +
+      "<p>" + esc(C.strapline) + ". Small-batch honey from our own garden hives in " + esc(C.regionShort) + ", bottled by hand.</p>" +
       '<p style="font-size:.85rem;opacity:.75">' + esc(C.fssaiLicense) + "</p></div>" +
       '<div><h4>Explore</h4><ul>' + NAV.map(function (n) { return '<li><a href="' + n.href + '">' + n.label + "</a></li>"; }).join("") +
-      '<li><a href="order.html">Order / Book</a></li></ul></div>' +
+      '<li><a href="order.html">Order / Request</a></li></ul></div>' +
       '<div><h4>Follow</h4><ul>' + (social || "<li>Coming soon</li>") + '<li><a href="privacy.html">Privacy Policy</a></li></ul></div>' +
       '<div><h4>Contact</h4><ul>' +
       '<li><a href="tel:' + esc(String(C.phone).replace(/\s/g, "")) + '">' + esc(C.phone) + "</a></li>" +

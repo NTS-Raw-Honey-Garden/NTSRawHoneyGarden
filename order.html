@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://checkout.razorpay.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://*.googletagmanager.com https://*.razorpay.com; frame-src https://api.razorpay.com https://checkout.razorpay.com; base-uri 'self'; form-action 'self'">
-  <title>Order / Book Raw Honey — Madhuvana Raw Honey</title>
-  <meta name="description" content="Book raw honey from our farm. Choose your honey and size, tell us where to deliver, and pay by UPI or on delivery once we confirm.">
-  <link rel="canonical" href="https://yourusername.github.io/honey-farm-website/order.html">
+  <title>Order or Request Honey — NTS Honey Garden</title>
+  <meta name="description" content="Order വൻതേൻ (Vanthen) Indian rock bee honey in 250 g, 500 g or 1 kg, or request a bee hive, a raw hive honey box or cheruthen and we will call you back.">
+  <link rel="canonical" href="https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden/order.html">
   <meta name="theme-color" content="#2c4431">
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,0..100;1,9..144,400..700,0..100&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+Malayalam:wght@400;600&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -20,16 +20,21 @@
 
   <main id="main">
     <div id="order-view">
-      <section class="page-hero" style="padding-bottom:30px">
+      <section class="page-hero" style="padding-bottom:20px">
         <div class="wrap">
           <p class="breadcrumb"><a href="index.html">Home</a> / Order</p>
-          <p class="eyebrow">Book your honey</p>
-          <h1>Reserve jars from this <em class="accent">harvest</em></h1>
+          <p class="eyebrow">Order or request</p>
+          <h1>Get our honey <em class="accent">delivered.</em></h1>
           <p class="lead" id="mode-note">No online payment needed. We'll confirm with you before delivery.</p>
+          <div class="order-switch" role="tablist" aria-label="Choose what you want to do" style="margin-top:26px">
+            <button type="button" id="tab-order" role="tab" aria-selected="true" aria-controls="panel-order">Order honey now</button>
+            <button type="button" id="tab-request" role="tab" aria-selected="false" aria-controls="panel-request">Request other items</button>
+          </div>
         </div>
       </section>
 
-      <section style="padding-bottom:40px">
+      <!-- ===================== ORDER PANEL ===================== -->
+      <section id="panel-order" role="tabpanel" aria-labelledby="tab-order" style="padding-bottom:40px">
         <div class="wrap order-layout">
           <form id="order-form" class="card" novalidate autocomplete="on">
             <div id="form-error" class="alert alert-error" role="alert" hidden></div>
@@ -37,7 +42,7 @@
             <div class="form-section">
               <h2><span class="n">1</span>Your honey</h2>
               <div id="line-items" class="line-items"></div>
-              <button type="button" id="add-line" class="add-line">+ Add another product</button>
+              <button type="button" id="add-line" class="add-line">+ Add another size</button>
             </div>
 
             <div class="form-section">
@@ -106,11 +111,11 @@
               </label>
               <label class="check">
                 <input type="checkbox" name="marketing" id="marketing">
-                <span>Optional: send me occasional news about new harvests and offers. I can unsubscribe any time.</span>
+                <span>Optional: send me occasional news about new batches and offers. I can unsubscribe any time.</span>
               </label>
               <!-- Honeypot field: hidden from people, catches spam bots -->
               <div class="hp-field" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-              <button type="submit" id="submit-order" class="btn btn-primary" style="width:100%;margin-top:26px;padding:18px">Place booking <span class="arrow" aria-hidden="true">→</span></button>
+              <button type="submit" id="submit-order" class="btn btn-primary" style="width:100%;margin-top:26px;padding:18px">Place order <span class="arrow" aria-hidden="true">→</span></button>
               <p class="hint" style="text-align:center;font-size:.85rem;color:var(--muted);margin-top:12px">We never ask for card or bank details on this form.</p>
             </div>
           </form>
@@ -126,6 +131,88 @@
             </div>
             <p class="summary-note">Pay nothing now. We confirm your order by phone or WhatsApp, then you pay by UPI or cash on delivery.</p>
           </aside>
+        </div>
+      </section>
+
+      <!-- ===================== REQUEST PANEL ===================== -->
+      <section id="panel-request" role="tabpanel" aria-labelledby="tab-request" hidden style="padding-bottom:40px">
+        <div class="wrap">
+          <div class="section-head" style="max-width:760px">
+            <h2 style="font-size:clamp(1.7rem,3vw,2.3rem)">Available on request</h2>
+            <p class="lead">These depend on the season and our colonies, so we don't sell them off the shelf. Tell us what you'd like and leave your phone number — we'll call you back with availability and price.</p>
+          </div>
+          <div class="request-grid" data-request-items style="margin-bottom:56px"></div>
+
+          <div class="order-layout">
+            <form id="request-form" class="card" novalidate autocomplete="on">
+              <div id="request-error" class="alert alert-error" role="alert" hidden></div>
+
+              <div class="form-section">
+                <h2><span class="n">1</span>What would you like?</h2>
+                <div class="request-pick" id="request-pick"></div>
+                <p class="error" id="request-pick-error" style="display:none;font-size:.84rem;color:var(--danger);margin-top:6px">Please choose at least one item.</p>
+              </div>
+
+              <div class="form-section">
+                <h2><span class="n">2</span>How can we reach you?</h2>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="r-name">Full name</label>
+                    <input id="r-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+                    <p class="error"></p>
+                  </div>
+                  <div class="field">
+                    <label for="r-phone">Mobile number</label>
+                    <div class="input-prefix"><span>+91</span><input id="r-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="98765 43210" required></div>
+                    <p class="hint">We'll call or WhatsApp you back.</p>
+                    <p class="error"></p>
+                  </div>
+                  <div class="field">
+                    <label for="r-email">Email <span class="opt">(optional)</span></label>
+                    <input id="r-email" name="email" type="email" autocomplete="email" maxlength="120">
+                    <p class="error"></p>
+                  </div>
+                  <div class="field">
+                    <label for="r-city">Your town / district <span class="opt">(optional)</span></label>
+                    <input id="r-city" name="city" type="text" autocomplete="address-level2" maxlength="60">
+                    <p class="error"></p>
+                  </div>
+                  <div class="field full">
+                    <label for="r-message">Tell us a little more <span class="opt">(optional)</span></label>
+                    <textarea id="r-message" name="message" maxlength="500" rows="3" placeholder="Quantity you need, when you need it, or any questions…"></textarea>
+                    <p class="error"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h2><span class="n">3</span>Confirm</h2>
+                <label class="check">
+                  <input type="checkbox" name="consent" id="r-consent" required>
+                  <span>I agree that <span data-config="farmName">the farm</span> may store and use my name and contact details to respond to this request, as described in the <a href="privacy.html" target="_blank">Privacy Policy</a>.<p class="error" style="margin:4px 0 0"></p></span>
+                </label>
+                <label class="check">
+                  <input type="checkbox" name="marketing" id="r-marketing">
+                  <span>Optional: send me occasional news about new batches and offers.</span>
+                </label>
+                <div class="hp-field" aria-hidden="true"><label for="r-website">Leave this empty</label><input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                <button type="submit" id="submit-request" class="btn btn-primary" style="width:100%;margin-top:26px;padding:18px">Send request <span class="arrow" aria-hidden="true">→</span></button>
+                <p class="hint" style="text-align:center;font-size:.85rem;color:var(--muted);margin-top:12px">No payment and no commitment — we'll simply get in touch.</p>
+              </div>
+            </form>
+
+            <aside class="card summary">
+              <h2>How requests work</h2>
+              <ol class="usage-list" style="margin-top:18px">
+                <li><span class="n">1</span><div><h4>You tell us what you need</h4><p>Pick one or more items and leave your number.</p></div></li>
+                <li><span class="n">2</span><div><h4>We check availability</h4><p>These items depend on the season and our colonies.</p></div></li>
+                <li><span class="n">3</span><div><h4>We call you back</h4><p>Usually within one working day, with price and timing.</p></div></li>
+              </ol>
+              <p class="summary-note" style="margin-top:20px">Prefer to talk first? Call <a href="#" id="call-link">us</a> or message us on WhatsApp.</p>
+            </aside>
+          </div>
+
+          <div data-coming-soon style="margin-top:50px"></div>
         </div>
       </section>
     </div>
