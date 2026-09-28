@@ -16,8 +16,8 @@ window.SITE_CONFIG = {
   regionShort: "Parippally",
 
   /* ---------- Contact details (shown on site & order confirmation) ---------- */
-  phone: "+91 8547478411 ",              // Shown to customers
-  whatsappNumber: "+91 8547478411",         // Country code + number, digits only (no + or spaces)
+  phone: "+91 8606877860 ",              // Shown to customers
+  whatsappNumber: "+91 8606877860",         // Country code + number, digits only (no + or spaces)
   address: "NTS Honey Garden, ESI Junction, Parippally ",
   businessHours: "Mon–Sat, 9:00 am – 6:00 pm",
   location: https://maps.app.goo.gl/w4FGyFiy28UCYyMx6
