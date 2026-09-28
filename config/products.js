@@ -27,19 +27,18 @@ window.HONEY_PRODUCTS = /*JSON-START*/
   "products": [
     {
       "id": "vanthen-rock-bee-honey",
-      "name": "വൻതേൻ · Vanthen",
-      "englishName": "Indian Rock Bee Honey",
+      "name": " ഞൊടിയൻ . വൻതേൻ · ",
+      "englishName": "Apis cerana indica",
       "tagline": "Deep amber, bold and full of character",
       "variety": "Indian Rock Bee Honey",
       "source": "Wild rock bee colonies and the flowering trees around our garden",
       "description": "Our signature honey — thick, dark amber with a rich, lingering taste that changes gently with each season's flowering. Collected in small batches and bottled by hand at the garden.",
-      "image": "assets/images/products/vanthen.svg",
       "badge": "Our signature",
       "available": true,
       "sizes": [
-        { "label": "250 g", "price": 130, "stock": 40 },
-        { "label": "500 g", "price": 250, "stock": 30 },
-        { "label": "1 kg",  "price": 500, "stock": 18 }
+           { "label": "250 g", "price": 130, "stock": 40, "image": "assets/images/farm/250g.jpeg" }
+           { "label": "500 g", "price": 250, "stock": 30, "image": "assets/images/farm/500g.jpeg" }
+           { "label": "1 kg",  "price": 500, "stock": 18, "image": "assets/images/farm/kg.jpeg"  }
       ]
     }
   ],
