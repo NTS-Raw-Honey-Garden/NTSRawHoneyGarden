@@ -23,9 +23,7 @@ window.SITE_CONFIG = {
   location: https://maps.app.goo.gl/w4FGyFiy28UCYyMx6
 
   /* ---------- Social links (leave "" to hide) ---------- */
-  instagram: "https://instagram.com/ntshoneygarden",
-  facebook: "",
-  youtube: "",
+
 
   /* ---------- Map (optional) ----------
      Paste a Google Maps "Embed a map" src URL here to show a map on the About page.
@@ -41,9 +39,9 @@ window.SITE_CONFIG = {
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
-  deliveryFee: 60,               // Flat delivery charge in rupees
+  deliveryFee: 50,               // Flat delivery charge in rupees
   freeDeliveryAbove: 999,        // Orders at or above this get free delivery (0 = never free)
-  minDeliveryDaysAhead: 2,       // Earliest delivery date = today + this many days
+  minDeliveryDaysAhead: 5,       // Earliest delivery date = today + this many days
   deliverySlots: ["Morning (9 am – 12 pm)", "Afternoon (12 – 4 pm)", "Evening (4 – 8 pm)", "Any time"],
   maxQuantityPerItem: 20,
 
