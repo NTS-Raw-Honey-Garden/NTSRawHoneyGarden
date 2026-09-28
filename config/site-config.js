@@ -12,16 +12,15 @@ window.SITE_CONFIG = {
   tagline: "Raw. Pure. Golden.",
   strapline: "From Our Hive to Your Home",
   foundedYear: "2018",
-  region: "Your District, Kerala, India",          // Shown on the About page
-  regionShort: "Kerala",
+  region: "Kollam, Kerala, India",          // Shown on the About page
+  regionShort: "Parippally",
 
   /* ---------- Contact details (shown on site & order confirmation) ---------- */
-  phone: "+91 90000 00000",              // Shown to customers
-  whatsappNumber: "919000000000",         // Country code + number, digits only (no + or spaces)
-  email: "hello@ntshoneygarden.in",
-  address: "Your Address, Your Village, Your District, Kerala – 000000",
+  phone: "+91 8547478411 ",              // Shown to customers
+  whatsappNumber: "+91 8547478411",         // Country code + number, digits only (no + or spaces)
+  address: "NTS Honey Garden, ESI Junction, Parippally ",
   businessHours: "Mon–Sat, 9:00 am – 6:00 pm",
-  fssaiLicense: "FSSAI Lic. No. 00000000000000",   // Add your FSSAI registration number
+  location: https://maps.app.goo.gl/w4FGyFiy28UCYyMx6
 
   /* ---------- Social links (leave "" to hide) ---------- */
   instagram: "https://instagram.com/ntshoneygarden",
