@@ -28,7 +28,7 @@
   var brandHtml =
     '<a class="brand" href="index.html" aria-label="' + esc(C.farmName) + ' – home">' +
     '<img src="assets/images/logo.svg" alt="" width="42" height="42">' +
-    '<span class="brand-name">' + esc(C.farmName) + '<small>Since ' + 2018 + ' · Raw. Pure. Golden.</small></span></a>';
+    '<span class="brand-name">' + esc(C.farmName) + '<small>Since ' + "2018" + ' · Raw. Pure. Golden.</small></span></a>';
 
   // ---------- Header ----------
   var header = document.getElementById("site-header");
