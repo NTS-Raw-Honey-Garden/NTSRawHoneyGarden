@@ -35,7 +35,7 @@ window.SITE_CONFIG = {
      documentation/02-backend-setup.md. While it is "", the site runs in
      WHATSAPP MODE: orders are not stored, and the customer is asked to
      send the order summary to you on WhatsApp instead. */
-  orderBackendUrl: "",
+  orderBackendUrl: "https://script.google.com/macros/s/AKfycbyvk9g9_zy6KRiWSZHdKiWRe_ZwDtNkWTsY9BOuo4qiyDCR99IR46omQ6xO4R5d6F390A/exec",
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
