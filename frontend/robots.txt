@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-
-# EDIT: change to your live address after deploying
-Sitemap: https://yourusername.github.io/honey-farm-website/sitemap.xml
