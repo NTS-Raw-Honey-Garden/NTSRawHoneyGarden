@@ -76,7 +76,7 @@
     var soldOut = Catalog.isSoldOut(p);
     return '<article class="product-card reveal reveal-delay-' + (idx % 3) + '" data-id="' + esc(p.id) + '">' +
       '<div class="product-media">' + (p.badge ? '<span class="product-badge">' + esc(p.badge) + "</span>" : "") +
-      '<img src="' + esc(firstImg) + '" alt="' + esc(p.englishName || p.name) + ' jar" loading="lazy" width="400" height="480" data-product-img></div>' +
+      '<img src="' + esc(firstImg) + '" alt="' + esc(p.englishName || p.name) + ' jar" loading="lazy" width="400" height="600" data-product-img></div>' +
       '<div class="product-body">' +
       '<div class="product-variety">' + esc(p.variety) + "</div>" +
       "<h3>" + Catalog.script(p.name) + "</h3>" +
@@ -94,7 +94,7 @@
   /* ---------- Request-only card ---------- */
   function requestCard(p, idx) {
     return '<article class="request-card reveal reveal-delay-' + (idx % 3) + '">' +
-      '<div class="product-media"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" width="400" height="460"></div>' +
+      '<div class="product-media"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" width="400" height="600"></div>' +
       '<div class="product-body">' +
       (p.note ? '<span class="request-note">' + esc(p.note) + "</span>" : "") +
       "<h3>" + Catalog.script(p.name) + "</h3>" +
