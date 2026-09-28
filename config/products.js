@@ -49,7 +49,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "name": "Raw Bee Hive Honey Box",
       "tagline": "A whole comb, straight from the hive",
       "description": "A boxed frame of natural comb, capped and full of honey, exactly as the bees built it. Availability depends on the season and the strength of our colonies, so we take these by request.",
-      "image": "assets/images/products/hive-box.svg",
+      "image": "assets/images/products/9.jpeg",
       "note": "Seasonal · limited",
       "available": true
     },
@@ -58,7 +58,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "name": "Bee Hive for Farmers",
       "tagline": "Start your own colony",
       "description": "A healthy, ready-to-place hive box with an established colony, for farmers and home gardeners who want better pollination and their own honey. We guide you through placement and basic care.",
-      "image": "assets/images/products/bee-hive.svg",
+      "image": "assets/images/farm/2.jpeg",
       "note": "Guidance included",
       "available": true
     },
