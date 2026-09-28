@@ -33,7 +33,6 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "variety": "Apis cerana indica",
       "source": "Bee colonies and the flowering trees around our garden",
       "description": "Our signature honey — thick, dark amber with a rich, lingering taste that changes gently with each season's flowering. Collected in small batches and bottled by hand at the garden.",
-      "image": "assets/images/farm/250g.jpeg",
       "badge": "Our signature",
       "available": true,
       "sizes": [
