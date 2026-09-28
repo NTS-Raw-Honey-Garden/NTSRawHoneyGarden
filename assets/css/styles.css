@@ -283,7 +283,7 @@ em.accent { font-style: italic; color: var(--amber); }
 .product-media { position: relative; aspect-ratio: 1 / .86; background: radial-gradient(70% 70% at 50% 60%, #fbe8b8, var(--wax)); display: grid; place-items: center; overflow: hidden; }
 .product-media img .product-media img {width: 78%; height: 88%; object-fit: contain; max-height: 320px;   /* ← add this line */ transition: transform .6s var(--ease), opacity .25s ease; }
 .product-card:hover .product-media img { transform: scale(1.05) rotate(-1.5deg); }
-.product-badge { position: absolute; top: 16px; left: 16px; background: var(--forest); color: #fff; font-size: .74rem; z-index: 5; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
+.product-badge { position: absolute; top: 16px; left: 16px; background: var(--forest); color: #fff; font-size: .74rem; z-index:100; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }
 .product-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1; }
 .product-variety { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
 .product-card h3 { font-size: 1.5rem; margin-bottom: 4px; }
