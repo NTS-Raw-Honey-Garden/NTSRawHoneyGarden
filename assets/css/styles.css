@@ -495,7 +495,7 @@ em.accent { font-style: italic; color: var(--amber); }
 .shop-hero .product-card h3 { font-size: 1.9rem; }
 .shop-hero .product-tagline { font-size: 1.08rem; }
 .shop-hero .price { font-size: 2.1rem; }
-@media (max-width: 820px) {
+@media (max-width: 960px) {
   .shop-hero .product-card { grid-template-columns: 1fr; }
   .shop-hero .product-media { aspect-ratio: unset; height: 380px; min-height: 0; padding: 0; }
   .shop-hero .product-media img { width: 100%; height: 100%; max-height: none; object-fit: contain; object-position: center center; }
