@@ -85,6 +85,7 @@
                   <label for="pincode">PIN code</label>
                   <input id="pincode" name="pincode" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="6" required>
                   <p class="error"></p>
+                </div>
                 <div class="field full">
                   <label for="message">Message or special requests <span class="opt">(optional)</span></label>
                   <textarea id="message" name="message" maxlength="500" rows="3" placeholder="Gift wrapping, bulk order, delivery instructions…"></textarea>
@@ -104,7 +105,10 @@
                 <span>Optional: send me occasional news about new batches and offers. I can unsubscribe any time.</span>
               </label>
               <!-- Honeypot field: hidden from people, catches spam bots -->
-              <div class="hp-field" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+              <div class="hp-field" aria-hidden="true" style="display:none">
+                <label for="website">Leave this empty</label>
+                <input id="website" name="website" type="text" tabindex="-1" autocomplete="nope" style="display:none">
+              </div>
               <button type="submit" id="submit-order" class="btn btn-primary" style="width:100%;margin-top:26px;padding:18px">Place order <span class="arrow" aria-hidden="true">→</span></button>
               <p class="hint" style="text-align:center;font-size:.85rem;color:var(--muted);margin-top:12px">We never ask for card or bank details on this form.</p>
             </div>
@@ -185,7 +189,11 @@
                   <input type="checkbox" name="marketing" id="r-marketing">
                   <span>Optional: send me occasional news about new batches and offers.</span>
                 </label>
-                <div class="hp-field" aria-hidden="true"><label for="r-website">Leave this empty</label><input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                <!-- Honeypot field: hidden from people, catches spam bots -->
+                <div class="hp-field" aria-hidden="true" style="display:none">
+                  <label for="r-website">Leave this empty</label>
+                  <input id="r-website" name="website" type="text" tabindex="-1" autocomplete="nope" style="display:none">
+                </div>
                 <button type="submit" id="submit-request" class="btn btn-primary" style="width:100%;margin-top:26px;padding:18px">Send request <span class="arrow" aria-hidden="true">→</span></button>
                 <p class="hint" style="text-align:center;font-size:.85rem;color:var(--muted);margin-top:12px">No payment and no commitment — we'll simply get in touch.</p>
               </div>
