@@ -222,7 +222,7 @@ em.accent { font-style: italic; color: var(--amber); }
 .highlight .icon { width: 52px; height: 52px; border-radius: 14px; background: var(--wax); display: grid; place-items: center; margin-bottom: 18px; color: var(--comb); }
 .highlight h3 { font-size: 1.2rem; margin-bottom: 6px; }
 .highlight p { color: var(--muted); font-size: .96rem; margin: 0; }
-@media (max-width: 1080px) { .highlights { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 960px) { .highlights { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .highlights { grid-template-columns: 1fr; } }
 
 /* Split feature */
@@ -343,7 +343,7 @@ em.accent { font-style: italic; color: var(--amber); }
 
 /* ---------- Forms (order) ---------- */
 .order-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 36px; align-items: start; }
-@media (max-width: 1080px) { .order-layout { grid-template-columns: 1fr; } }
+@media (max-width: 960px) { .order-layout { grid-template-columns: 1fr; } }
 .card { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; padding: 32px; }
 @media (max-width: 560px) { .card { padding: 22px 18px; border-radius: 18px; } }
 .form-section + .form-section { margin-top: 34px; padding-top: 30px; border-top: 1px solid var(--line); }
@@ -495,10 +495,10 @@ em.accent { font-style: italic; color: var(--amber); }
 .shop-hero .product-card h3 { font-size: 1.9rem; }
 .shop-hero .product-tagline { font-size: 1.08rem; }
 .shop-hero .price { font-size: 2.1rem; }
-@media (max-width: 1080px) {
-  .shop-hero .product-card { grid-template-columns: 1fr; }
-  .shop-hero .product-media { aspect-ratio: unset; height: 380px; min-height: 0; padding: 0; }
-  .shop-hero .product-media img { width: 100%; height: 100%; max-height: none; object-fit: contain; object-position: center center; }
+@media (max-width: 960px) {
+  .shop-hero .product-card { display: flex; flex-direction: column; }
+  .shop-hero .product-media { width: 100%; height: auto; aspect-ratio: unset; min-height: 0; padding: 24px; }
+  .shop-hero .product-media img { width: 100%; height: auto; max-height: none; object-fit: contain; }
   .shop-hero .product-body { padding: 26px 22px 28px; }
   .shop-hero .product-card h3 { font-size: 1.6rem; }
 }
