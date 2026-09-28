@@ -37,9 +37,9 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "badge": "Our signature",
       "available": true,
       "sizes": [
-        { "label": "250 g", "price": 299, "stock": 40 },
-        { "label": "500 g", "price": 549, "stock": 30 },
-        { "label": "1 kg",  "price": 999, "stock": 18 }
+        { "label": "250 g", "price": 130, "stock": 40 },
+        { "label": "500 g", "price": 250, "stock": 30 },
+        { "label": "1 kg",  "price": 500, "stock": 18 }
       ]
     }
   ],
