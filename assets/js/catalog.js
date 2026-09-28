@@ -135,7 +135,11 @@
       });
       /* Fire change once for the pre-checked size so the correct image loads on page open. */
       var checked = el.querySelector('input[type="radio"]:checked');
-      if (checked) checked.dispatchEvent(new Event("change", { bubbles: true }));
+      if (checked) {
+        setTimeout(function () {
+          checked.dispatchEvent(new Event("change", { bubbles: true }));
+        }, 0);
+      }
     });
     root.querySelectorAll(".reveal").forEach(function (el) { if (window.observeReveal) window.observeReveal(el); });
   }
