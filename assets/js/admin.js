@@ -8,7 +8,7 @@
   var C = window.SITE_CONFIG || {};
   var STATUSES = ["New", "Confirmed", "Dispatched", "Delivered", "Cancelled"];
   var KEY_STORE = "hf_admin_key";
-  var state = { key: "", orders: [], status: "All", type: "All", demo: false, open: {}, stock: null, stockOpen: false };
+  var state = { key: "", orders: [], status: "Active", type: "All", demo: false, open: {}, stock: null, stockOpen: false };
 
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -95,7 +95,11 @@
     var from = $("from").value, to = $("to").value;
     return state.orders.filter(function (o) {
       if (state.type !== "All" && (o.type || "Order") !== state.type) return false;
-      if (state.status !== "All" && o.status !== state.status) return false;
+      /* "Active" = still needs work. Delivered and Cancelled rows stay in the
+         sheet but are kept out of the default view. */
+      if (state.status === "Active") {
+        if (o.status === "Delivered" || o.status === "Cancelled") return false;
+      } else if (state.status !== "All" && o.status !== state.status) return false;
       var day = (o.orderDate || "").slice(0, 10);
       if (from && day < from) return false;
       if (to && day > to) return false;
@@ -116,8 +120,9 @@
     var counts = { All: all.length };
     STATUSES.forEach(function (s) { counts[s] = 0; });
     all.forEach(function (o) { counts[o.status] = (counts[o.status] || 0) + 1; });
+    counts.Active = all.filter(function (o) { return o.status !== "Delivered" && o.status !== "Cancelled"; }).length;
 
-    $("status-tabs").innerHTML = ["All"].concat(STATUSES).map(function (s) {
+    $("status-tabs").innerHTML = ["Active", "All"].concat(STATUSES).map(function (s) {
       return '<button class="tab" role="tab" data-s="' + s + '" aria-selected="' + (state.status === s) + '">' + s + "<b>" + (counts[s] || 0) + "</b></button>";
     }).join("");
 
