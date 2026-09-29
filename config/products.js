@@ -49,7 +49,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "name": "Raw Bee Hive Honey Box",
       "tagline": "A whole comb, straight from the hive",
       "description": "A boxed frame of natural comb, capped and full of honey, exactly as the bees built it. Availability depends on the season and the strength of our colonies, so we take these by request.",
-      "image": "assets/images/farm/2.jpeg",
+      "image": "assets/images/farm/10.jpeg",
       "note": "Seasonal · limited",
       "available": true
     },
