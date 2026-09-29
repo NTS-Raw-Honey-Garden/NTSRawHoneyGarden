@@ -28,7 +28,7 @@ window.SITE_CONFIG = {
   mapEmbedUrl: "",
 
   /* ---------- Order backend ---------- */
-  orderBackendUrl: "https://script.google.com/macros/s/AKfycbxS1K97SGQziKd_lRvkZELVCEnYAwqeXVHkFFbwmgs9hZRh7uKcph8_ip-U-bk1O4j4qA/exec",
+  orderBackendUrl: "https://script.google.com/macros/s/AKfycbwMkfUVZVaDTw0ik86r_5RnIOq7v3O8dvyC5X-Pp7TDwx89O5pf0hpKqnV2DxZVhrAqfg/exec",
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
