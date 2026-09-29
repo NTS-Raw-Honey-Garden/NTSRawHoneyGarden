@@ -381,7 +381,7 @@
   }
 
   function orderWaText(r, o) {
-    var lines = ["Hello " + C.farmName + ", I'd like to place this order.", "", "Reference: " + r.ref];
+    var lines = ["Hi " + C.farmName + ", I'd like to place this order.", "", "Reference: " + r.ref];
     r.items.forEach(function (i) { lines.push("• " + stripTags(i.name) + " " + i.size + " × " + i.qty + " = " + Cat.money(i.lineTotal)); });
     lines.push("Delivery: " + (r.delivery ? Cat.money(r.delivery) : "Free"), "Total: " + Cat.money(r.total), "",
       "Name: " + o.customer.name, "Phone: " + o.customer.phone,
