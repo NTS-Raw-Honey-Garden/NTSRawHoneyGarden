@@ -12,10 +12,10 @@ window.SITE_CONFIG = {
   tagline: "Raw. Pure. Golden.",
   strapline: "From Our Hive to Your Home",
   foundedYear: "2018",
-  region: "Kollam, Kerala, India",          // Shown on the About page
+  region: "Kollam, Kerala, India",
   regionShort: "Parippally",
 
-  /* ---------- Contact details (shown on site & order confirmation) ---------- */
+  /* ---------- Contact details ---------- */
   phone: "+91 8606877860",
   whatsappNumber: "918606877860",
   address: "NTS Honey Garden, ESI Junction, Parippally",
@@ -24,41 +24,31 @@ window.SITE_CONFIG = {
 
   /* ---------- Social links (leave "" to hide) ---------- */
 
-
-  /* ---------- Map (optional) ----------
-     Paste a Google Maps "Embed a map" src URL here to show a map on the About page.
-     Leave "" to hide the map. */
+  /* ---------- Map (optional) ---------- */
   mapEmbedUrl: "",
 
-  /* ---------- Order backend ----------
-     Paste the Google Apps Script "Web app URL" here after following
-     documentation/02-backend-setup.md. While it is "", the site runs in
-     WHATSAPP MODE: orders are not stored, and the customer is asked to
-     send the order summary to you on WhatsApp instead. */
+  /* ---------- Order backend ---------- */
   orderBackendUrl: "https://script.google.com/macros/s/AKfycbxS1K97SGQziKd_lRvkZELVCEnYAwqeXVHkFFbwmgs9hZRh7uKcph8_ip-U-bk1O4j4qA/exec",
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
-  deliveryFee: 50,               // Flat delivery charge in rupees
-  freeDeliveryAbove: 999,        // Orders at or above this get free delivery (0 = never free)
-  minDeliveryDaysAhead: 5,       // Earliest delivery date = today + this many days
+  deliveryFee: 50,
+  freeDeliveryAbove: 999,
+  minDeliveryDaysAhead: 5,
   deliverySlots: ["Morning (9 am – 12 pm)", "Afternoon (12 – 4 pm)", "Evening (4 – 8 pm)", "Any time"],
   maxQuantityPerItem: 20,
 
-  /* ---------- Payment ----------
-     "none"     = customer pays on delivery / by UPI after confirmation (current setup)
-     "razorpay" = online payment (see documentation/06-future-features.md before switching) */
+  /* ---------- Payment ---------- */
   payment: {
     provider: "none",
-    upiId: "ntshoneygarden@upi",   // Shown in confirmation as a payment option (leave "" to hide)
-    razorpayKeyId: ""              // PUBLIC key id only. Never put a secret key in this file.
+    upiId: "ntshoneygarden@upi",
+    razorpayKeyId: ""
   },
 
   /* ---------- SEO ---------- */
-  siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",   // Change if your address changes
+  siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",
   metaDescription: "Raw, pure, golden honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) Indian rock bee honey in 250 g, 500 g and 1 kg. Order online.",
 
-  /* ---------- Analytics (optional) ----------
-     Paste a Google Analytics 4 Measurement ID like "G-XXXXXXX" to enable. */
+  /* ---------- Analytics (optional) ---------- */
   analyticsId: ""
 };
