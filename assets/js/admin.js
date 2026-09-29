@@ -337,9 +337,9 @@
 
   function sampleStock() {
     return [
-      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "250 g", price: 130, stock: 37, sold: 3, updated: "29 Sep, 10:42" },
-      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "500 g", price: 250, stock: 2, sold: 28, updated: "29 Sep, 11:05" },
-      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "1 kg", price: 500, stock: 0, sold: 18, updated: "28 Sep, 16:20" }
+      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "250 g", price: 130, stock: 100, sold: 0, updated: "29 Sep, 10:42" },
+      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "500 g", price: 250, stock: 50, sold: 0, updated: "29 Sep, 11:05" },
+      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "1 kg", price: 500, stock: 25, sold: 0, updated: "28 Sep, 16:20" }
     ];
   }
   /* ---------------- Export ---------------- */
