@@ -8,7 +8,7 @@
   var C = window.SITE_CONFIG || {};
   var STATUSES = ["New", "Confirmed", "Dispatched", "Delivered", "Cancelled"];
   var KEY_STORE = "hf_admin_key";
-  var state = { key: "", orders: [], status: "All", type: "All", demo: false, open: {} };
+  var state = { key: "", orders: [], status: "All", type: "All", demo: false, open: {}, stock: null, stockOpen: false };
 
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -36,7 +36,7 @@
     state.demo = true; state.orders = sampleOrders(); showApp();
   });
   $("logout-btn").addEventListener("click", function () {
-    setKey(""); state = { key: "", orders: [], status: "All", type: "All", demo: false, open: {} };
+    setKey(""); state = { key: "", orders: [], status: "All", type: "All", demo: false, open: {}, stock: null, stockOpen: false };
     $("app").hidden = true; $("login").hidden = false; $("admin-key").value = "";
   });
   $("refresh-btn").addEventListener("click", function () { if (!state.demo) load(); });
@@ -62,9 +62,13 @@
   }
 
   function showApp() {
-    $("login").hidden = true; $("app").hidden = false;
-    $("demo-flag").hidden = !state.demo;
-    render();
+     $("login").hidden = true; $("app").hidden = false;
+     $("demo-flag").hidden = !state.demo;
+     state.stockOpen = false; state.stock = null;
+     $("stock-body").hidden = true;
+     $("stock-toggle").setAttribute("aria-expanded", "false");
+     $("stock-summary").textContent = "";
+     render();
   }
 
   function notify(err, ok) {
@@ -189,7 +193,150 @@
       .then(done)
       .catch(function (err) { sel.value = prev; sel.disabled = false; notify(err); });
   });
+/* =====================================================================
+     STOCK PANEL — view and edit the live stock numbers
+     ===================================================================== */
+  var LOW_STOCK = 3;
 
+  function stockNotify(msg, ok) {
+    var n = $("stock-notice");
+    n.className = "alert" + (ok ? " ok" : "");
+    n.textContent = typeof msg === "string" ? msg : (msg.code === "AUTH" ? "Your session has expired — please sign in again." : msg.message);
+    n.hidden = false;
+    clearTimeout(stockNotify.t); stockNotify.t = setTimeout(function () { n.hidden = true; }, 5000);
+  }
+
+  $("stock-toggle").addEventListener("click", function () {
+    state.stockOpen = !state.stockOpen;
+    $("stock-toggle").setAttribute("aria-expanded", state.stockOpen ? "true" : "false");
+    $("stock-body").hidden = !state.stockOpen;
+    if (state.stockOpen && state.stock === null) loadStock();
+  });
+
+  $("stock-refresh").addEventListener("click", function () { loadStock(); });
+
+  function loadStock() {
+    var b = $("stock-refresh"); b.disabled = true; b.textContent = "Loading…";
+    var done = function () { b.disabled = false; b.textContent = "Reload stock"; };
+
+    if (state.demo) {
+      state.stock = sampleStock();
+      renderStock(); done();
+      return Promise.resolve();
+    }
+    return window.AdminAPI.call("listStock", state.key).then(function (res) {
+      state.stock = res.rows || [];
+      renderStock();
+    }).catch(function (err) {
+      state.stock = [];
+      renderStock();
+      stockNotify(err);
+    }).then(done);
+  }
+
+  function renderStock() {
+    var rows = state.stock || [];
+    var body = $("stock-table").querySelector("tbody");
+
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="7" class="muted" style="padding:18px">No stock rows yet. In Apps Script, run <code>syncStockFromProducts</code> to fill this from your product list.</td></tr>';
+      $("stock-summary").textContent = "";
+      return;
+    }
+
+    body.innerHTML = rows.map(function (r, i) {
+      var low = r.stock <= LOW_STOCK;
+      return '<tr class="' + (low ? "low" : "") + '" data-i="' + i + '">' +
+        "<td>" + esc(r.name || r.productId) + "</td>" +
+        "<td>" + esc(r.size) + "</td>" +
+        '<td class="num" data-label="Price">' + money(r.price) + "</td>" +
+        '<td class="num" data-label="In stock"><input class="stock-input" type="number" min="0" max="100000" step="1" value="' + r.stock +
+          '" data-i="' + i + '" aria-label="Stock for ' + esc(r.name || r.productId) + " " + esc(r.size) + '"></td>' +
+        '<td class="num" data-label="Sold">' + r.sold + "</td>" +
+        '<td class="stock-row-note">' + esc(r.updated || "") + "</td>" +
+        '<td><button class="btn stock-save" type="button" data-i="' + i + '" disabled>Save</button></td>' +
+        "</tr>";
+    }).join("");
+
+    var out = rows.filter(function (r) { return r.stock === 0; }).length;
+    var low = rows.filter(function (r) { return r.stock > 0 && r.stock <= LOW_STOCK; }).length;
+    var total = rows.reduce(function (a, r) { return a + r.stock; }, 0);
+    $("stock-summary").textContent = total + " in stock" +
+      (low ? " · " + low + " running low" : "") +
+      (out ? " · " + out + " sold out" : "");
+  }
+
+  /* Mark a row dirty as soon as the number differs from what the server has. */
+  $("stock-table").addEventListener("input", function (e) {
+    var input = e.target.closest(".stock-input"); if (!input) return;
+    var i = Number(input.getAttribute("data-i"));
+    var row = (state.stock || [])[i]; if (!row) return;
+    var changed = String(input.value) !== String(row.stock) && input.value !== "";
+    input.classList.toggle("dirty", changed);
+    var btn = input.closest("tr").querySelector(".stock-save");
+    if (btn) btn.disabled = !changed;
+  });
+
+  /* Enter saves, Escape reverts. */
+  $("stock-table").addEventListener("keydown", function (e) {
+    var input = e.target.closest(".stock-input"); if (!input) return;
+    var i = Number(input.getAttribute("data-i"));
+    if (e.key === "Enter") { e.preventDefault(); saveStock(i); }
+    if (e.key === "Escape") {
+      var row = (state.stock || [])[i];
+      if (row) { input.value = row.stock; input.classList.remove("dirty"); }
+      var btn = input.closest("tr").querySelector(".stock-save");
+      if (btn) btn.disabled = true;
+    }
+  });
+
+  $("stock-table").addEventListener("click", function (e) {
+    var btn = e.target.closest(".stock-save"); if (!btn) return;
+    saveStock(Number(btn.getAttribute("data-i")));
+  });
+
+  function saveStock(i) {
+    var row = (state.stock || [])[i]; if (!row) return;
+    var tr = $("stock-table").querySelector('tr[data-i="' + i + '"]'); if (!tr) return;
+    var input = tr.querySelector(".stock-input");
+    var btn = tr.querySelector(".stock-save");
+    var n = parseInt(input.value, 10);
+
+    if (isNaN(n) || n < 0 || n > 100000) {
+      stockNotify("Stock must be a whole number between 0 and 100000.");
+      input.value = row.stock; input.classList.remove("dirty"); btn.disabled = true;
+      return;
+    }
+    if (n === row.stock) { input.classList.remove("dirty"); btn.disabled = true; return; }
+
+    input.disabled = true; btn.disabled = true; btn.textContent = "Saving…";
+    var label = (row.name || row.productId) + " " + row.size;
+
+    var done = function () {
+      row.stock = n;
+      row.updated = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short" }) + ", " +
+                    new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+      renderStock();
+      stockNotify(label + " set to " + n + ".", true);
+    };
+    if (state.demo) return done();
+
+    window.AdminAPI.call("setStock", state.key, { productId: row.productId, size: row.size, stock: n })
+      .then(done)
+      .catch(function (err) {
+        input.disabled = false; input.value = row.stock; input.classList.remove("dirty");
+        btn.disabled = true; btn.textContent = "Save";
+        stockNotify(err);
+      });
+  }
+
+  function sampleStock() {
+    return [
+      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "250 g", price: 130, stock: 37, sold: 3, updated: "29 Sep, 10:42" },
+      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "500 g", price: 250, stock: 2, sold: 28, updated: "29 Sep, 11:05" },
+      { productId: "vanthen-rock-bee-honey", name: "വൻതേൻ Honey", size: "1 kg", price: 500, stock: 0, sold: 18, updated: "28 Sep, 16:20" }
+    ];
+  }
   /* ---------------- Export ---------------- */
   var COLUMNS = [
     ["Booking Ref", "ref"], ["Type", "type"], ["Order Date", "orderDate"], ["Status", "status"], ["Customer Name", "name"], ["Phone", "phone"],
