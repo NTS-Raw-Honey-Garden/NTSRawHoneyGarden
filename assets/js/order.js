@@ -171,13 +171,20 @@
     return { items: items, totals: t };
   }
 
-  /* ---------- Delivery date & slots ---------- */
+  /* ---------- Delivery date & slots ----------
+     These two fields are optional. If they are not on the page, skip them
+     quietly — a missing optional field must never break the whole form. */
   var dateEl = form.elements.deliveryDate;
-  var minD = new Date(); minD.setDate(minD.getDate() + (C.minDeliveryDaysAhead || 2));
-  var maxD = new Date(); maxD.setDate(maxD.getDate() + 60);
+  var slotEl = form.elements.deliverySlot;
   function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-  dateEl.min = ymd(minD); dateEl.max = ymd(maxD);
-  form.elements.deliverySlot.innerHTML = '<option value="">No preference</option>' + (C.deliverySlots || []).map(function (s) { return "<option>" + esc(s) + "</option>"; }).join("");
+  if (dateEl) {
+    var minD = new Date(); minD.setDate(minD.getDate() + (C.minDeliveryDaysAhead || 2));
+    var maxD = new Date(); maxD.setDate(maxD.getDate() + 60);
+    dateEl.min = ymd(minD); dateEl.max = ymd(maxD);
+  }
+  if (slotEl) {
+    slotEl.innerHTML = '<option value="">No preference</option>' + (C.deliverySlots || []).map(function (s) { return "<option>" + esc(s) + "</option>"; }).join("");
+  }
 
   /* ---------- Shared validation helpers ---------- */
   var V = {
@@ -204,6 +211,7 @@
   function wireValidation(theForm, rules) {
     function validateField(name) {
       var el = theForm.elements[name];
+      if (!el) return true; // field not on this page — nothing to validate
       var msg = V[rules[name]](cleanVal(el, name), el);
       var wrap = el.closest(".field") || el.closest(".check");
       if (wrap) {
@@ -216,6 +224,7 @@
     }
     Object.keys(rules).forEach(function (name) {
       var el = theForm.elements[name];
+      if (!el) return;
       el.addEventListener("blur", function () { if (el.value || el.type === "checkbox") validateField(name); });
       el.addEventListener("input", function () { if (el.getAttribute("aria-invalid") === "true") validateField(name); });
     });
@@ -235,7 +244,7 @@
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     errorBox.hidden = true;
-    if (form.elements.website.value) return; // honeypot
+    if (form.elements.website && form.elements.website.value) return; // honeypot
 
     var s = renderSummary();
     if (!s.items.length) return showError(errorBox, "Please choose at least one size.");
@@ -251,10 +260,10 @@
       items: s.items.map(function (i) { return { productId: i.product.id, size: i.size.label, qty: i.qty }; }),
       customer: { name: cleanVal(form.elements.name), phone: cleanVal(form.elements.phone, "phone"), email: cleanVal(form.elements.email).toLowerCase() },
       delivery: { address: cleanVal(form.elements.address), city: cleanVal(form.elements.city), pincode: cleanVal(form.elements.pincode, "pincode"),
-        date: cleanVal(form.elements.deliveryDate), slot: form.elements.deliverySlot.value },
+        date: dateEl ? cleanVal(dateEl) : "", slot: slotEl ? slotEl.value : "" },
       message: cleanVal(form.elements.message),
       consent: true,
-      marketingOptIn: form.elements.marketing.checked,
+      marketingOptIn: !!(form.elements.marketing && form.elements.marketing.checked),
       clientTotal: s.totals.total,
       page: location.href.split("?")[0]
     };
@@ -315,7 +324,7 @@
   rForm.addEventListener("submit", function (e) {
     e.preventDefault();
     rErrorBox.hidden = true;
-    if (rForm.elements.website.value) return; // honeypot
+    if (rForm.elements.website && rForm.elements.website.value) return; // honeypot
 
     var picked = pickedItems();
     if (!picked.length) { pickError.style.display = "block"; return showError(rErrorBox, "Please choose at least one item you'd like to request."); }
@@ -331,7 +340,7 @@
       delivery: { city: cleanVal(rForm.elements.city) },
       message: cleanVal(rForm.elements.message),
       consent: true,
-      marketingOptIn: rForm.elements.marketing.checked,
+      marketingOptIn: !!(rForm.elements.marketing && rForm.elements.marketing.checked),
       page: location.href.split("?")[0]
     };
 
