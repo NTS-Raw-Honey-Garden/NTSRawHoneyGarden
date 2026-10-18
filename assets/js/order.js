@@ -146,10 +146,23 @@
     return order.map(function (k) { return map[k]; });
   }
 
+  /* "750 g" / "1.25 kg" — for the line under the delivery charge. */
+  function kg(grams) {
+    if (!grams) return "";
+    return grams >= 1000 ? +(grams / 1000).toFixed(2) + " kg" : grams + " g";
+  }
+
   function totals(items) {
     var sub = items.reduce(function (a, i) { return a + i.size.price * i.qty; }, 0);
-    var del = Cat.delivery(sub);
-    return { subtotal: sub, delivery: del, total: sub + del, qty: items.reduce(function (a, i) { return a + i.qty; }, 0) };
+    var grams = items.reduce(function (a, i) { return a + Cat.grams(i.size.label) * i.qty; }, 0);
+    var pin = form.elements.pincode ? form.elements.pincode.value : "";
+    var del = Cat.delivery(sub, grams, pin);     // null until the PIN is complete
+    return {
+      subtotal: sub, grams: grams, delivery: del,
+      zone: Cat.zoneFor(pin), offer: Cat.offerFor(pin),
+      total: sub + (del || 0),
+      qty: items.reduce(function (a, i) { return a + i.qty; }, 0)
+    };
   }
 
   function renderSummary() {
@@ -160,15 +173,39 @@
       return "<li><span>" + esc(i.product.englishName || i.product.name) + " · " + esc(i.size.label) + " × " + i.qty + "</span><span>" + Cat.money(i.size.price * i.qty) + "</span></li>";
     }).join("") : '<li class="empty">Your basket is empty</li>';
     document.getElementById("sum-subtotal").textContent = Cat.money(t.subtotal);
-    document.getElementById("sum-delivery").textContent = t.subtotal ? (t.delivery ? Cat.money(t.delivery) : "Free") : "—";
+
+    /* Delivery needs the PIN code, so it waits for one rather than guessing. */
+    var delCell = document.getElementById("sum-delivery");
+    if (!t.subtotal) delCell.textContent = "—";
+    else if (t.delivery === null) delCell.textContent = "Enter PIN code";
+    else delCell.textContent = t.delivery ? Cat.money(t.delivery) : "Free";
+
+    /* Weight and zone, so the charge never looks arbitrary. */
+    var note = document.getElementById("delivery-note");
+    if (note) {
+      if (!t.subtotal) note.textContent = "";
+      else if (t.delivery === null) note.textContent = kg(t.grams) + " · enter your PIN code for the delivery charge";
+      else note.textContent = kg(t.grams) + " · " + Cat.zoneLabel(t.zone) + (t.offer ? " · " + t.offer.label : "");
+    }
+
     document.getElementById("sum-total").textContent = Cat.money(t.total);
+
+    var P = C.deliveryPricing || {};
     var fd = document.getElementById("free-delivery");
-    if (C.freeDeliveryAbove) {
-      var left = C.freeDeliveryAbove - t.subtotal;
-      fd.querySelector("span").textContent = left > 0 ? "Add " + Cat.money(left) + " more for free delivery" : "You've unlocked free delivery";
-      fd.querySelector(".free-delivery-bar div").style.width = Math.min(100, (t.subtotal / C.freeDeliveryAbove) * 100) + "%";
+    if (P.discountAbove && P.discountAmount) {
+      fd.hidden = false;
+      var left = P.discountAbove - t.subtotal;
+      fd.querySelector("span").textContent = left > 0
+        ? "Add " + Cat.money(left) + " more for " + Cat.money(P.discountAmount) + " off delivery"
+        : Cat.money(P.discountAmount) + " off delivery applied";
+      fd.querySelector(".free-delivery-bar div").style.width = Math.min(100, (t.subtotal / P.discountAbove) * 100) + "%";
     } else fd.hidden = true;
     return { items: items, totals: t };
+  }
+
+  /* The delivery charge depends on the PIN code, so recost it as that is typed. */
+  if (form.elements.pincode) {
+    form.elements.pincode.addEventListener("input", renderSummary);
   }
 
   /* ---------- Delivery date & slots ----------
