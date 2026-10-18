@@ -44,10 +44,80 @@
       return { cls: "", text: "In stock · " + size.stock + " available" };
     },
     /* Delivery fee rule (mirrored on the server, which has the final say). */
-    delivery: function (subtotal) {
+    /* ---------- Delivery: total weight × distance zone ----------
+       Mirrored in the Apps Script backend, which has the final say. */
+
+    /* Weight of one bottle in grams. Reads site-config, then falls back to
+       reading the label itself ("500 g", "1 kg") so a new size still works. */
+    grams: function (sizeLabel) {
+      var p = C.deliveryPricing || {};
+      var w = (p.sizeWeights || {})[sizeLabel];
+      if (w != null) return Number(w) || 0;
+      var m = String(sizeLabel || "").match(/([\d.]+)\s*(kg|g)\b/i);
+      if (!m) return 0;
+      return Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "kg" ? 1000 : 1));
+    },
+
+    /* Longest matching PIN prefix wins, so "6915" (local) beats "691" (near).
+       Returns null until the PIN is a full 6 digits, so the summary can say
+       "Enter PIN code" rather than quoting a wrong price. */
+    zoneFor: function (pincode) {
+      var pin = String(pincode || "").replace(/\D/g, "");
+      if (pin.length !== 6) return null;
+      var p = C.deliveryPricing || {};
+      var best = null, bestLen = -1;
+      (p.zones || []).forEach(function (z) {
+        (z.prefixes || []).forEach(function (pre) {
+          if (pin.indexOf(pre) === 0 && pre.length > bestLen) { best = z.zone; bestLen = pre.length; }
+        });
+      });
+      return best || p.defaultZone || "mid";
+    },
+
+    zoneLabel: function (zone) {
+      var p = C.deliveryPricing || {};
+      var hit = (p.zones || []).filter(function (z) { return z.zone === zone; })[0];
+      if (hit) return hit.label || zone;
+      return p.defaultZoneLabel || zone;
+    },
+
+    /* A town-specific offer, e.g. 50% off to Bengaluru and Tirupati. */
+    offerFor: function (pincode) {
+      var pin = String(pincode || "").replace(/\D/g, "");
+      if (pin.length !== 6) return null;
+      var p = C.deliveryPricing || {};
+      var best = null, bestLen = -1;
+      (p.offers || []).forEach(function (o) {
+        (o.prefixes || []).forEach(function (pre) {
+          if (pin.indexOf(pre) === 0 && pre.length > bestLen) { best = o; bestLen = pre.length; }
+        });
+      });
+      return best;
+    },
+
+    /* Fee in rupees, or null when the PIN is not usable yet.
+       Order: base rate → town offer → large-order discount. */
+    delivery: function (subtotal, totalGrams, pincode) {
       if (!subtotal) return 0;
-      if (C.freeDeliveryAbove && subtotal >= C.freeDeliveryAbove) return 0;
-      return Number(C.deliveryFee || 0);
+      var p = C.deliveryPricing || {};
+      var zone = this.zoneFor(pincode);
+      if (!zone) return null;
+
+      var rows = p.rates || [], row = null;
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i].maxGrams == null || totalGrams <= rows[i].maxGrams) { row = rows[i]; break; }
+      }
+      if (!row) return 0;
+
+      var fee = Number(row[zone] || 0);
+
+      var offer = this.offerFor(pincode);
+      if (offer && offer.percentOff) fee = Math.round(fee * (1 - Number(offer.percentOff) / 100));
+
+      if (p.discountAbove && subtotal >= p.discountAbove) {
+        fee = fee - Number(p.discountAmount || 0);
+      }
+      return Math.max(0, fee);
     },
     /* Wraps Malayalam characters so they get the right font. */
     script: function (name) {
