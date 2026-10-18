@@ -9,19 +9,18 @@ window.SITE_CONFIG = {
 
   /* ---------- Farm identity ---------- */
   farmName: "NTS Honey Garden",
-  tagline: "Raw. Pure. Golden.",
+  tagline: "Raw. Pure. Natural.",
   strapline: "From Our Hive to Your Home",
   foundedYear: "2018",
   region: "Your District, Kerala, India",          // Shown on the About page
   regionShort: "Kerala",
 
   /* ---------- Contact details (shown on site & order confirmation) ---------- */
-  phone: "+91 90000 00000",              // Shown to customers
-  whatsappNumber: "919000000000",         // Country code + number, digits only (no + or spaces)
-  email: "hello@ntshoneygarden.in",
-  address: "Your Address, Your Village, Your District, Kerala – 000000",
-  businessHours: "Mon–Sat, 9:00 am – 6:00 pm",
-  fssaiLicense: "FSSAI Lic. No. 00000000000000",   // Add your FSSAI registration number
+  phone: "+91 8547478411",              // Shown to customers
+  whatsappNumber: "918547478411",         // Country code + number, digits only (no + or spaces)
+  email: "ntshoneygarden@gmail.com",
+  address: "Parippally, Kollam, Kerala – 691574",
+  fssaiLicense: "FSSAI Lic. No. 21326150000831",   
 
   /* ---------- Social links (leave "" to hide) ---------- */
   instagram: "https://instagram.com/ntshoneygarden",
@@ -38,11 +37,11 @@ window.SITE_CONFIG = {
      documentation/02-backend-setup.md. While it is "", the site runs in
      WHATSAPP MODE: orders are not stored, and the customer is asked to
      send the order summary to you on WhatsApp instead. */
-  orderBackendUrl: "",
+  orderBackendUrl: "https://script.google.com/macros/s/AKfycbxS1K97SGQziKd_lRvkZELVCEnYAwqeXVHkFFbwmgs9hZRh7uKcph8_ip-U-bk1O4j4qA/exec",
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
-  minDeliveryDaysAhead: 2,       // Earliest delivery date = today + this many days
+  minDeliveryDaysAhead: 15,       // Earliest delivery date = today + this many days
   deliverySlots: ["Morning (9 am – 12 pm)", "Afternoon (12 – 4 pm)", "Evening (4 – 8 pm)", "Any time"],
   maxQuantityPerItem: 20,
 
