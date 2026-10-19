@@ -156,9 +156,10 @@
     var sub = items.reduce(function (a, i) { return a + i.size.price * i.qty; }, 0);
     var grams = items.reduce(function (a, i) { return a + Cat.grams(i.size.label) * i.qty; }, 0);
     var pin = form.elements.pincode ? form.elements.pincode.value : "";
-    var del = Cat.delivery(sub, grams, pin);     // null until the PIN is complete
+    var detail = Cat.deliveryDetail(sub, grams, pin);   // null until the PIN is complete
+    var del = detail === null ? null : detail.fee;
     return {
-      subtotal: sub, grams: grams, delivery: del,
+      subtotal: sub, grams: grams, delivery: del, detail: detail,
       zone: Cat.zoneFor(pin), offer: Cat.offerFor(pin),
       total: sub + (del || 0),
       qty: items.reduce(function (a, i) { return a + i.qty; }, 0)
@@ -174,30 +175,53 @@
     }).join("") : '<li class="empty">Your basket is empty</li>';
     document.getElementById("sum-subtotal").textContent = Cat.money(t.subtotal);
 
-    /* Delivery needs the PIN code, so it waits for one rather than guessing. */
+    /* Delivery needs the PIN code, so it waits for one rather than guessing.
+       When a discount applies, show the original struck through so the saving
+       is visible rather than silently baked into one number. */
     var delCell = document.getElementById("sum-delivery");
+    var d = t.detail;
     if (!t.subtotal) delCell.textContent = "—";
     else if (t.delivery === null) delCell.textContent = "Enter PIN code";
-    else delCell.textContent = t.delivery ? Cat.money(t.delivery) : "Free";
+    else if (d && d.saved > 0) {
+      delCell.innerHTML = '<s style="opacity:.5;font-weight:400;margin-right:7px">' + Cat.money(d.base) + "</s>" +
+        (d.fee ? Cat.money(d.fee) : '<strong style="color:#2f6b3a">Free</strong>');
+    } else delCell.textContent = t.delivery ? Cat.money(t.delivery) : "Free";
 
     /* Weight and zone, so the charge never looks arbitrary. */
     var note = document.getElementById("delivery-note");
     if (note) {
       if (!t.subtotal) note.textContent = "";
       else if (t.delivery === null) note.textContent = kg(t.grams) + " · enter your PIN code for the delivery charge";
-      else note.textContent = kg(t.grams) + " · " + Cat.zoneLabel(t.zone) + (t.offer ? " · " + t.offer.label : "");
+      else note.textContent = kg(t.grams) + " · " + Cat.zoneLabel(t.zone);
+    }
+
+    /* Each discount named, with what it took off. */
+    var sav = document.getElementById("delivery-savings");
+    if (sav) {
+      if (t.subtotal && d && d.lines.length) {
+        sav.hidden = false;
+        sav.innerHTML = d.lines.map(function (l) {
+          return '<li style="display:flex;justify-content:space-between;gap:12px;padding:3px 0">' +
+            "<span>" + esc(l.label) + "</span>" +
+            '<span style="white-space:nowrap;font-weight:600">− ' + Cat.money(l.off) + "</span></li>";
+        }).join("") +
+        '<li style="display:flex;justify-content:space-between;gap:12px;padding:6px 0 0;margin-top:4px;' +
+        'border-top:1px dashed currentColor;font-weight:700">' +
+        "<span>You save</span><span>" + Cat.money(d.saved) + "</span></li>";
+      } else { sav.hidden = true; sav.innerHTML = ""; }
     }
 
     document.getElementById("sum-total").textContent = Cat.money(t.total);
 
+    /* Progress toward the large-order discount. Once it has actually been
+       applied the green box above says so, so the bar steps aside. */
     var P = C.deliveryPricing || {};
     var fd = document.getElementById("free-delivery");
-    if (P.discountAbove && P.discountPercentOff) {
+    var left = P.discountAbove ? P.discountAbove - t.subtotal : 0;
+    if (P.discountAbove && P.discountPercentOff && left > 0) {
       fd.hidden = false;
-      var left = P.discountAbove - t.subtotal;
-      fd.querySelector("span").textContent = left > 0
-        ? "Add " + Cat.money(left) + " more for " + P.discountPercentOff + "% off delivery"
-        : P.discountPercentOff + "% off delivery applied";
+      fd.querySelector("span").textContent =
+        "Add " + Cat.money(left) + " more for " + P.discountPercentOff + "% off delivery";
       fd.querySelector(".free-delivery-bar div").style.width = Math.min(100, (t.subtotal / P.discountAbove) * 100) + "%";
     } else fd.hidden = true;
     return { items: items, totals: t };

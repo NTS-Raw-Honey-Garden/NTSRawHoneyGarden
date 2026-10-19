@@ -95,10 +95,14 @@
       return best;
     },
 
-    /* Fee in rupees, or null when the PIN is not usable yet.
-       Order: base rate → town offer → large-order discount. */
-    delivery: function (subtotal, totalGrams, pincode) {
-      if (!subtotal) return 0;
+    /* The full delivery working-out, so the summary can SHOW the discounts
+       instead of quietly applying them. Returns null while the PIN is short.
+       Order: base rate → town offer → large-order discount.
+         { fee, base, saved, zone, lines: [{label, off}] } */
+    deliveryDetail: function (subtotal, totalGrams, pincode) {
+      var empty = { fee: 0, base: 0, saved: 0, zone: null, lines: [] };
+      if (!subtotal) return empty;
+
       var p = C.deliveryPricing || {};
       var zone = this.zoneFor(pincode);
       if (!zone) return null;
@@ -107,17 +111,34 @@
       for (var i = 0; i < rows.length; i++) {
         if (rows[i].maxGrams == null || totalGrams <= rows[i].maxGrams) { row = rows[i]; break; }
       }
-      if (!row) return 0;
+      if (!row) return empty;
 
-      var fee = Number(row[zone] || 0);
+      var base = Number(row[zone] || 0);
+      var fee = base, lines = [], before;
 
       var offer = this.offerFor(pincode);
-      if (offer && offer.percentOff) fee = Math.round(fee * (1 - Number(offer.percentOff) / 100));
+      if (offer && offer.percentOff) {
+        before = fee;
+        fee = Math.round(fee * (1 - Number(offer.percentOff) / 100));
+        if (before - fee > 0) lines.push({ label: offer.label, off: before - fee });
+      }
 
       if (p.discountAbove && subtotal >= p.discountAbove && p.discountPercentOff) {
+        before = fee;
         fee = Math.round(fee * (1 - Number(p.discountPercentOff) / 100));
+        if (before - fee > 0) {
+          lines.push({ label: "Large order — " + p.discountPercentOff + "% off delivery", off: before - fee });
+        }
       }
-      return Math.max(0, fee);
+
+      fee = Math.max(0, fee);
+      return { fee: fee, base: base, saved: Math.max(0, base - fee), zone: zone, lines: lines };
+    },
+
+    /* Just the number. Built on deliveryDetail so the two can never drift. */
+    delivery: function (subtotal, totalGrams, pincode) {
+      var d = this.deliveryDetail(subtotal, totalGrams, pincode);
+      return d === null ? null : d.fee;
     },
     /* Wraps Malayalam characters so they get the right font. */
     script: function (name) {
