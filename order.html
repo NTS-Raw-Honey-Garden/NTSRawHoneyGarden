@@ -18,6 +18,61 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header id="site-header"></header>
 
+  <!-- ===== Delivery offer pop-up. Text comes from deliveryPricing.offers
+       in config/site-config.js, so it can never disagree with the charge. ===== -->
+  <style>
+    #offer-pop {
+      border: 0; padding: 0; max-width: 400px; width: calc(100% - 32px);
+      border-radius: 18px; background: var(--paper); color: var(--ink);
+      box-shadow: 0 30px 70px -24px rgba(60, 38, 10, .45);
+      font-family: "Inter", system-ui, sans-serif;
+    }
+    #offer-pop::backdrop { background: rgba(31, 49, 36, .55); }
+    .offer-pop-top {
+      background: var(--forest); color: var(--cream);
+      padding: 26px 24px 22px; text-align: center; position: relative;
+    }
+    .offer-pop-kicker {
+      margin: 0 0 8px; font-size: .72rem; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--honey-light);
+    }
+    .offer-pop-big {
+      margin: 0; font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1.9rem, 7vw, 2.4rem); font-weight: 600; line-height: 1.1;
+      color: var(--honey);
+    }
+    .offer-pop-x {
+      position: absolute; top: 10px; right: 10px; width: 36px; height: 36px;
+      border: 0; border-radius: 50%; background: rgba(250, 244, 232, .14);
+      color: var(--cream); font-size: 1.4rem; line-height: 1; cursor: pointer;
+    }
+    .offer-pop-x:hover { background: rgba(250, 244, 232, .28); }
+    .offer-pop-body { padding: 22px 24px 24px; }
+    .offer-pop-body p { margin: 0 0 14px; font-size: .95rem; line-height: 1.5; }
+    .offer-pop-note {
+      margin: 0 0 18px !important; font-size: .83rem !important; color: var(--muted);
+      background: var(--wax); padding: 10px 12px; border-radius: 9px;
+    }
+    .offer-pop-ok { width: 100%; }
+    @media (prefers-reduced-motion: no-preference) {
+      #offer-pop[open] { animation: offerPopIn .22s ease-out; }
+      @keyframes offerPopIn { from { opacity: 0; transform: translateY(10px) scale(.97); } }
+    }
+  </style>
+
+  <dialog id="offer-pop" aria-labelledby="offer-pop-h" hidden>
+    <div class="offer-pop-top">
+      <button type="button" class="offer-pop-x" id="offer-pop-x" aria-label="Close">&times;</button>
+      <p class="offer-pop-kicker">Delivery offer</p>
+      <h2 class="offer-pop-big" id="offer-pop-h"></h2>
+    </div>
+    <div class="offer-pop-body">
+      <p id="offer-pop-text"></p>
+      <p class="offer-pop-note">Enter your PIN code on the order form and the discount is applied automatically.</p>
+      <button type="button" class="btn btn-primary offer-pop-ok" id="offer-pop-ok">Start my order</button>
+    </div>
+  </dialog>
+
   <main id="main">
     <div id="order-view">
       <section class="page-hero" style="padding-bottom:20px">
