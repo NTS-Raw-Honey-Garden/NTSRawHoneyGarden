@@ -97,14 +97,14 @@ window.SITE_CONFIG = {
      "none"     = customer pays by UPI after confirmation (current setup)
      "razorpay" = online payment (see documentation/06-future-features.md before switching) */
   payment: {
-    provider: "razorpay",
+    provider: "none",
     upiId: "sudanvs@icic",   // Shown in confirmation as a payment option (leave "" to hide)
     razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"              // PUBLIC key id only. Never put a secret key in this file.
   },
 
   /* ---------- SEO ---------- */
   siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",   // Change if your address changes
-  metaDescription: "Raw, pure, golden honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) Indian rock bee honey in 250 g, 500 g and 1 kg. Order online.",
+  metaDescription: "Raw, pure, natural honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) Indian rock bee honey in 250 g, 500 g and 1 kg. Order online.",
 
   /* ---------- Analytics (optional) ----------
      Paste a Google Analytics 4 Measurement ID like "G-XXXXXXX" to enable. */
