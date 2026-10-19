@@ -9,7 +9,7 @@ window.SITE_CONFIG = {
 
   /* ---------- Farm identity ---------- */
   farmName: "NTS Honey Garden",
-  tagline: "Raw. Pure. Golden.",
+  tagline: "Raw. Pure. Natural.",
   strapline: "From Our Hive to Your Home",
   foundedYear: "2018",
   region: "Kollam, Kerala, India",
@@ -18,8 +18,7 @@ window.SITE_CONFIG = {
   /* ---------- Contact details ---------- */
   phone: "+91 8547478411",
   whatsappNumber: "918547478411",
-  address: "NTS Honey Garden, ESI Junction, Parippally",
-  businessHours: "Mon–Sat, 9:00 am – 6:00 pm",
+  address: "NTS Honey Garden, Parippally",
   location: "https://maps.app.goo.gl/w4FGyFiy28UCYyMx6",
 
   /* ---------- Social links (leave "" to hide) ---------- */
@@ -68,16 +67,16 @@ window.SITE_CONFIG = {
     "defaultZoneLabel": "200 – 2,000 km",
 
     "rates": [
-      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 100, "far": 100 },
-      { "maxGrams": 1000, "local": 0, "near": 70,  "mid": 150, "far": 200 },
-      { "maxGrams": 3000, "local": 0, "near": 140, "mid": 300, "far": 400 },
-      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 450, "far": 600 },
+      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 85, "far": 100 },
+      { "maxGrams": 1000, "local": 0, "near": 85,  "mid": 120, "far": 180 },
+      { "maxGrams": 3000, "local": 0, "near": 135, "mid": 250, "far": 350 },
+      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 450, "far": 500 },
       { "maxGrams": null, "local": 0, "near": 280, "mid": 600, "far": 800 }
     ],
 
     "offers": [
       { "label": "Bengaluru & Tirupati offer — 50% off delivery",
-        "percentOff": 50,
+        "percentOff": 25,
         "prefixes": ["560", "562", "5175"] }
     ],
 
@@ -89,8 +88,8 @@ window.SITE_CONFIG = {
   /* ---------- Payment ---------- */
   payment: {
     provider: "none",
-    upiId: "ntshoneygarden@upi",
-    razorpayKeyId: ""
+    upiId: "sudanvs@icici",
+    razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"
   },
 
   /* ---------- SEO ---------- */
