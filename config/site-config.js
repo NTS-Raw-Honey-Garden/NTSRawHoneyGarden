@@ -9,52 +9,43 @@ window.SITE_CONFIG = {
 
   /* ---------- Farm identity ---------- */
   farmName: "NTS Honey Garden",
-  tagline: "Raw. Pure. Natural.",
+  tagline: "Raw. Pure. Golden.",
   strapline: "From Our Hive to Your Home",
   foundedYear: "2018",
-  region: "Kollam, Kerala, India",          // Shown on the About page
-  regionShort: "Kerala",
+  region: "Kollam, Kerala, India",
+  regionShort: "Parippally",
 
-  /* ---------- Contact details (shown on site & order confirmation) ---------- */
-  phone: "+91 8547478411",              // Shown to customers
-  whatsappNumber: "918547478411",         // Country code + number, digits only (no + or spaces)
-  email: "ntshoneygarden@gmail.com",
-  address: "Parippally, Kollam, Kerala – 691574",
-  fssaiLicense: "FSSAI Lic. No. 21326150000831",   
+  /* ---------- Contact details ---------- */
+  phone: "+91 8547478411",
+  whatsappNumber: "918547478411",
+  address: "NTS Honey Garden, ESI Junction, Parippally",
+  businessHours: "Mon–Sat, 9:00 am – 6:00 pm",
+  location: "https://maps.app.goo.gl/w4FGyFiy28UCYyMx6",
 
   /* ---------- Social links (leave "" to hide) ---------- */
-  instagram: "https://instagram.com/ntshoneygarden",
-  facebook: "",
-  youtube: "",
 
-  /* ---------- Map (optional) ----------
-     Paste a Google Maps "Embed a map" src URL here to show a map on the About page.
-     Leave "" to hide the map. */
+  /* ---------- Map (optional) ---------- */
   mapEmbedUrl: "",
 
-  /* ---------- Order backend ----------
-     Paste the Google Apps Script "Web app URL" here after following
-     documentation/02-backend-setup.md. While it is "", the site runs in
-     WHATSAPP MODE: orders are not stored, and the customer is asked to
-     send the order summary to you on WhatsApp instead. */
-  orderBackendUrl: "https://script.google.com/macros/s/AKfycbxS1K97SGQziKd_lRvkZELVCEnYAwqeXVHkFFbwmgs9hZRh7uKcph8_ip-U-bk1O4j4qA/exec",
+  /* ---------- Order backend ---------- */
+  orderBackendUrl: "https://script.google.com/macros/s/AKfycbwMkfUVZVaDTw0ik86r_5RnIOq7v3O8dvyC5X-Pp7TDwx89O5pf0hpKqnV2DxZVhrAqfg/exec",
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
-  minDeliveryDaysAhead: 10,       // Earliest delivery date = today + this many days
+  minDeliveryDaysAhead: 5,
   deliverySlots: ["Morning (9 am – 12 pm)", "Afternoon (12 – 4 pm)", "Evening (4 – 8 pm)", "Any time"],
   maxQuantityPerItem: 20,
 
   /* ---------- Delivery pricing ----------
-     Delivery is worked out from TWO things:
-       1. the TOTAL weight of the order (all bottles added together), and
-       2. which distance zone the customer's PIN code falls in.
+     The charge comes from TWO things: the TOTAL weight of the order (every
+     bottle added together, whatever the sizes) and which distance zone the
+     customer's PIN code falls in.
 
-     IMPORTANT: everything between the DELIVERY-START and DELIVERY-END markers
-     must stay valid JSON — "double quotes" around every name, commas between
-     items but NOT after the last one, and no comments inside. The website and
-     the order backend BOTH read this block, so they always agree on the price.
-     Check edits at https://jsonlint.com (paste only the part between markers). */
+     Everything between DELIVERY-START and DELIVERY-END must stay valid JSON:
+     "double quotes" around every name, commas between items but NOT after the
+     last one, no comments inside. The website and the order backend both read
+     this block, so they can never disagree on a price. Check edits at
+     https://jsonlint.com (paste only the part between the markers). */
   deliveryPricing: /*DELIVERY-START*/ {
 
     "originPincode": "691574",
@@ -74,39 +65,38 @@ window.SITE_CONFIG = {
     ],
 
     "defaultZone": "mid",
+    "defaultZoneLabel": "200 – 2,000 km",
 
     "rates": [
-      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 85, "far": 100 },
-      { "maxGrams": 1000, "local": 0, "near": 100,  "mid": 120, "far": 150 },
-      { "maxGrams": 3000, "local": 0, "near": 120, "mid": 200, "far": 300 },
-      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 350, "far": 500 },
+      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 100, "far": 100 },
+      { "maxGrams": 1000, "local": 0, "near": 70,  "mid": 150, "far": 200 },
+      { "maxGrams": 3000, "local": 0, "near": 140, "mid": 300, "far": 400 },
+      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 450, "far": 600 },
       { "maxGrams": null, "local": 0, "near": 280, "mid": 600, "far": 800 }
     ],
 
-    "discountAbove": 2000,
-    "discountpercentOff": 10,
-
     "offers": [
-      { "label": "50% off delivery", "percentOff": 50,
-        "prefixes": ["517619", "517501", "673504"] }
-    ]
+      { "label": "Bengaluru & Tirupati offer — 50% off delivery",
+        "percentOff": 50,
+        "prefixes": ["560", "562", "5175"] }
+    ],
+
+    "discountAbove": 2000,
+    "discountPercentOff": 10
 
   } /*DELIVERY-END*/,
 
-  /* ---------- Payment ----------
-     "none"     = customer pays by UPI after confirmation (current setup)
-     "razorpay" = online payment (see documentation/06-future-features.md before switching) */
+  /* ---------- Payment ---------- */
   payment: {
     provider: "none",
-    upiId: "sudanvs@icic",   // Shown in confirmation as a payment option (leave "" to hide)
-    razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"              // PUBLIC key id only. Never put a secret key in this file.
+    upiId: "ntshoneygarden@upi",
+    razorpayKeyId: ""
   },
 
   /* ---------- SEO ---------- */
-  siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",   // Change if your address changes
-  metaDescription: "Raw, pure, natural honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) Indian rock bee honey in 250 g, 500 g and 1 kg. Order online.",
+  siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",
+  metaDescription: "Raw, pure, golden honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) honey in 250 g, 500 g and 1 kg. Order online.",
 
-  /* ---------- Analytics (optional) ----------
-     Paste a Google Analytics 4 Measurement ID like "G-XXXXXXX" to enable. */
+  /* ---------- Analytics (optional) ---------- */
   analyticsId: ""
 };
