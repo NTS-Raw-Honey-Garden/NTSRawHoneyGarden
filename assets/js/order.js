@@ -21,8 +21,8 @@
   var modeNote = document.getElementById("mode-note");
   if (modeNote) {
     modeNote.innerHTML = window.OrderAPI.hasBackend()
-      ? (C.payment.upiId ? "by UPI " 
-      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp";
+      ? "We'll call or WhatsApp you to confirm your order, then you pay by UPI."
+      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp.";
   }
 
   /* ---------- Phone link in request sidebar ---------- */
@@ -461,7 +461,7 @@
     }).join("");
     var payInfo = paid
       ? "<p><strong>Payment received.</strong> Payment ID: " + esc(r.payment.reference) + "</p>"
-      : "<p>No payment is needed yet. Once we confirm availability we'll share payment details" + (C.payment && C.payment.upiId ? " — you can pay by UPI to <strong>" + esc(C.payment.upiId) + "</strong>" : "") + " or pay on delivery.</p>";
+      : "<p>Once we confirm availability we'll share payment details" + (C.payment && C.payment.upiId ? " — pay by UPI to <strong>" + esc(C.payment.upiId) + "</strong>" : "") + ". We don't accept cash on delivery.</p>";
 
     finishConfirmation(
       '<div class="confirmation">' +
