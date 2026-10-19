@@ -28,7 +28,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
     {
       "id": "vanthen - honey",
       "name": " ഞൊടിയൻ . വൻതേൻ · ",
-      "englishName": "ഞൊടിയൻ . വൻതേൻ · Honey - Apis cerana indica ",
+      "englishName": " Honey - Apis cerana indica (ഞൊടിയൻ വൻതേൻ) ",
       "tagline": "Deep amber and thick ",
       "variety": "Apis cerana indica (Vann then)",
       "source": "Bee colonies and the flowering trees around our garden",
