@@ -12,7 +12,7 @@ window.SITE_CONFIG = {
   tagline: "Raw. Pure. Natural.",
   strapline: "From Our Hive to Your Home",
   foundedYear: "2018",
-  region: "Your District, Kerala, India",          // Shown on the About page
+  region: "Kollam, Kerala, India",          // Shown on the About page
   regionShort: "Kerala",
 
   /* ---------- Contact details (shown on site & order confirmation) ---------- */
@@ -41,7 +41,7 @@ window.SITE_CONFIG = {
 
   /* ---------- Delivery rules ---------- */
   currency: "₹",
-  minDeliveryDaysAhead: 15,       // Earliest delivery date = today + this many days
+  minDeliveryDaysAhead: 10,       // Earliest delivery date = today + this many days
   deliverySlots: ["Morning (9 am – 12 pm)", "Afternoon (12 – 4 pm)", "Evening (4 – 8 pm)", "Any time"],
   maxQuantityPerItem: 20,
 
@@ -76,8 +76,8 @@ window.SITE_CONFIG = {
     "defaultZone": "mid",
 
     "rates": [
-      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 100, "far": 100 },
-      { "maxGrams": 1000, "local": 0, "near": 70,  "mid": 100, "far": 150 },
+      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 85, "far": 100 },
+      { "maxGrams": 1000, "local": 0, "near": 100,  "mid": 120, "far": 150 },
       { "maxGrams": 3000, "local": 0, "near": 120, "mid": 200, "far": 300 },
       { "maxGrams": 5000, "local": 0, "near": 210, "mid": 350, "far": 500 },
       { "maxGrams": null, "local": 0, "near": 280, "mid": 600, "far": 800 }
