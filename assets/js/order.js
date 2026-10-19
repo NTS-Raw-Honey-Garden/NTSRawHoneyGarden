@@ -25,6 +25,47 @@
       : "After you submit, you'll get a reference number and a button for enquiry on WhatsApp.";
   }
 
+  /* ---------- Delivery offer pop-up ----------
+     Everything shown comes from deliveryPricing.offers in site-config.js.
+     The headline percentage is read from "percentOff" itself, so the pop-up
+     can never promise a different number from the one actually charged.
+     Shows once per browsing session; closing it is remembered. */
+  (function offerPopup() {
+    var dlg = document.getElementById("offer-pop");
+    if (!dlg || typeof dlg.showModal !== "function") return;   // very old browser: skip
+
+    var offer = ((C.deliveryPricing || {}).offers || [])[0];
+    if (!offer || !offer.percentOff) return;                   // no offer running
+
+    var SEEN = "nts_offer_seen";
+    try { if (sessionStorage.getItem(SEEN)) return; } catch (e) {}
+
+    /* "Nadapuram, Bengaluru & Tirupati offer — 25% off delivery"
+       -> "Nadapuram, Bengaluru & Tirupati", so the places can be named in a
+       sentence. Falls back to the whole label if it is worded differently. */
+    var places = String(offer.label || "").split(/\s+offer\b/i)[0].trim() || offer.label || "";
+
+    document.getElementById("offer-pop-h").textContent = offer.percentOff + "% off delivery";
+    document.getElementById("offer-pop-text").textContent = offer.popupText ||
+      (places ? "Delivering to " + places + "? Your delivery charge is " + offer.percentOff +
+                "% off, for a limited time."
+              : "Your delivery charge is " + offer.percentOff + "% off, for a limited time.");
+
+    function close() {
+      try { sessionStorage.setItem(SEEN, "1"); } catch (e) {}
+      if (dlg.open) dlg.close();
+    }
+    document.getElementById("offer-pop-x").addEventListener("click", close);
+    document.getElementById("offer-pop-ok").addEventListener("click", close);
+    dlg.addEventListener("close", close);                      // Escape key
+    dlg.addEventListener("click", function (e) {               // click the backdrop
+      if (e.target === dlg) close();
+    });
+
+    dlg.hidden = false;
+    setTimeout(function () { try { dlg.showModal(); } catch (e) {} }, 550);
+  })();
+
   /* ---------- Phone link in request sidebar ---------- */
   var callLink = document.getElementById("call-link");
   if (callLink && C.phone) {
