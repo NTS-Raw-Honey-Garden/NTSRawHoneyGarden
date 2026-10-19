@@ -98,7 +98,7 @@ window.SITE_CONFIG = {
      "razorpay" = online payment (see documentation/06-future-features.md before switching) */
   payment: {
     provider: "razorpay",
-    upiId: "",   // Shown in confirmation as a payment option (leave "" to hide)
+    upiId: "sudanvs@icic",   // Shown in confirmation as a payment option (leave "" to hide)
     razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"              // PUBLIC key id only. Never put a secret key in this file.
   },
 
