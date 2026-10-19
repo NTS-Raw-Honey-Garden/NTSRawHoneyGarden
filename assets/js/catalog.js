@@ -114,8 +114,8 @@
       var offer = this.offerFor(pincode);
       if (offer && offer.percentOff) fee = Math.round(fee * (1 - Number(offer.percentOff) / 100));
 
-      if (p.discountAbove && subtotal >= p.discountAbove) {
-        fee = fee - Number(p.discountAmount || 0);
+      if (p.discountAbove && subtotal >= p.discountAbove && p.discountPercentOff) {
+        fee = Math.round(fee * (1 - Number(p.discountPercentOff) / 100));
       }
       return Math.max(0, fee);
     },

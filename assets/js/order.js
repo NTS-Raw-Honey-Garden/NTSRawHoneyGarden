@@ -21,8 +21,8 @@
   var modeNote = document.getElementById("mode-note");
   if (modeNote) {
     modeNote.innerHTML = window.OrderAPI.hasBackend()
-      ?  (C.payment.upiId ? "by UPI or " : "") + "on delivery."
-      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp for enquiries";
+      ? "No online payment needed. We'll call or WhatsApp you to confirm, then you can pay " + (C.payment.upiId ? "by UPI or " : "") + "on delivery."
+      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp. No online payment needed.";
   }
 
   /* ---------- Phone link in request sidebar ---------- */
@@ -192,12 +192,12 @@
 
     var P = C.deliveryPricing || {};
     var fd = document.getElementById("free-delivery");
-    if (P.discountAbove && P.discountAmount) {
+    if (P.discountAbove && P.discountPercentOff) {
       fd.hidden = false;
       var left = P.discountAbove - t.subtotal;
       fd.querySelector("span").textContent = left > 0
-        ? "Add " + Cat.money(left) + " more for " + Cat.money(P.discountAmount) + " off delivery"
-        : Cat.money(P.discountAmount) + " off delivery applied";
+        ? "Add " + Cat.money(left) + " more for " + P.discountPercentOff + "% off delivery"
+        : P.discountPercentOff + "% off delivery applied";
       fd.querySelector(".free-delivery-bar div").style.width = Math.min(100, (t.subtotal / P.discountAbove) * 100) + "%";
     } else fd.hidden = true;
     return { items: items, totals: t };
