@@ -59,7 +59,7 @@
         // WhatsApp mode: nothing is stored. The customer sends the summary to the farm.
         return Promise.resolve({ ok: true, mode: "whatsapp", ref: localRef("WA") });
       }
-      return post({ action: "createOrder", order: order, paymentProvider: (C.payment || {}).provider || "none" });
+      return post({ action: "createOrder", order: order, paymentProvider: (C.payment || {}).provider || "razorpay" });
     },
 
     /* request = { requestItems:[id,...], customer:{...}, delivery:{city}, message, consent, marketingOptIn }
