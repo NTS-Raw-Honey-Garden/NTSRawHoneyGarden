@@ -88,7 +88,7 @@ window.SITE_CONFIG = {
 
     "offers": [
       { "label": "50% off delivery", "percentOff": 50,
-        "prefixes": ["517619", "517501"] }
+        "prefixes": ["517619", "517501", "673504"] }
     ]
 
   } /*DELIVERY-END*/,
