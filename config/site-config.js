@@ -67,11 +67,12 @@ window.SITE_CONFIG = {
     "defaultZoneLabel": "200 – 2,000 km",
 
     "rates": [
-      { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 85, "far": 100 },
-      { "maxGrams": 1000, "local": 0, "near": 85,  "mid": 120, "far": 180 },
-      { "maxGrams": 3000, "local": 0, "near": 135, "mid": 250, "far": 350 },
-      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 450, "far": 500 },
-      { "maxGrams": null, "local": 0, "near": 280, "mid": 600, "far": 800 }
+      { "maxGrams": 250,  "local": 0, "near": 50, "mid": 85, "far": 120 },
+      { "maxGrams": 500,  "local": 0, "near": 85,   "mid": 100, "far": 120 },
+      { "maxGrams": 1000, "local": 0, "near": 85,  "mid": 130, "far": 180 },
+      { "maxGrams": 3000, "local": 0, "near": 150, "mid": 250, "far": 350 },
+      { "maxGrams": 5000, "local": 0, "near": 230, "mid": 450, "far": 600 },
+      { "maxGrams": null, "local": 0, "near": 300, "mid": 600, "far": 800 }
     ],
 
     "offers": [
