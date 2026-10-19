@@ -104,7 +104,7 @@
     },
 
     /* Razorpay — ready for later. Requires: payment.provider = "razorpay",
-       payment.razorpayKeyId (PUBLIC key) here, and RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET
+       payment.razorpayKeyId (rzp_test_TpjzQxxIcYhPxa) here, and RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET
        set as Script Properties in the backend, which creates the Razorpay order. */
     razorpay: {
       label: "Pay online (UPI, cards, netbanking)",
