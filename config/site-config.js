@@ -68,7 +68,7 @@ window.SITE_CONFIG = {
 
     "rates": [
       { "maxGrams": 250,  "local": 0, "near": 50, "mid": 85, "far": 120 },
-      { "maxGrams": 500,  "local": 0, "near": 85,   "mid": 100, "far": 120 },
+      { "maxGrams": 500,  "local": 0, "near": 85,   "mid": 100, "far": 130 },
       { "maxGrams": 1000, "local": 0, "near": 85,  "mid": 130, "far": 180 },
       { "maxGrams": 3000, "local": 0, "near": 150, "mid": 250, "far": 350 },
       { "maxGrams": 5000, "local": 0, "near": 230, "mid": 450, "far": 600 },
