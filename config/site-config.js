@@ -76,7 +76,7 @@ window.SITE_CONFIG = {
     ],
 
     "offers": [
-      { "label": "Nadapuram, Bengaluru & Tirupati offer — 50% off delivery",
+      { "label": "Nadapuram, Bengaluru & Tirupati offer — 25% off delivery",
         "percentOff": 25,
         "prefixes": ["560", "673504", "517", "517619", "673506"] }
     ],
