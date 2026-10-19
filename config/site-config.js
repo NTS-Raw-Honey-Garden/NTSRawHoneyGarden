@@ -77,14 +77,14 @@ window.SITE_CONFIG = {
 
     "rates": [
       { "maxGrams": 250,  "local": 0, "near": 0,   "mid": 100, "far": 100 },
-      { "maxGrams": 1000, "local": 0, "near": 70,  "mid": 150, "far": 200 },
-      { "maxGrams": 3000, "local": 0, "near": 140, "mid": 300, "far": 400 },
-      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 450, "far": 600 },
+      { "maxGrams": 1000, "local": 0, "near": 70,  "mid": 100, "far": 150 },
+      { "maxGrams": 3000, "local": 0, "near": 120, "mid": 200, "far": 300 },
+      { "maxGrams": 5000, "local": 0, "near": 210, "mid": 350, "far": 500 },
       { "maxGrams": null, "local": 0, "near": 280, "mid": 600, "far": 800 }
     ],
 
     "discountAbove": 2000,
-    "discountAmount": 200,
+    "discountpercentOff": 10,
 
     "offers": [
       { "label": "50% off delivery", "percentOff": 50,
