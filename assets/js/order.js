@@ -21,8 +21,8 @@
   var modeNote = document.getElementById("mode-note");
   if (modeNote) {
     modeNote.innerHTML = window.OrderAPI.hasBackend()
-      ? "We'll call or WhatsApp you to confirm your order, then you pay by UPI."
-      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp.";
+      ? "We'll call or WhatsApp you to confirm your order"
+      : "After you submit, you'll get a reference number and a button for enquiry on WhatsApp.";
   }
 
   /* ---------- Phone link in request sidebar ---------- */
