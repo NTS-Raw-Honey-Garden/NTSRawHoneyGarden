@@ -97,7 +97,7 @@ window.SITE_CONFIG = {
      "none"     = customer pays by UPI after confirmation (current setup)
      "razorpay" = online payment (see documentation/06-future-features.md before switching) */
   payment: {
-    provider: "none",
+    provider: "razorpay",
     upiId: "",   // Shown in confirmation as a payment option (leave "" to hide)
     razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"              // PUBLIC key id only. Never put a secret key in this file.
   },
