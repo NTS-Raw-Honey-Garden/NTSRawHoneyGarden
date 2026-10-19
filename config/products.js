@@ -26,7 +26,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
 {
   "products": [
     {
-      "id": "vanthen-rock-bee-honey",
+      "id": "vanthen - honey",
       "name": " ഞൊടിയൻ . വൻതേൻ · ",
       "englishName": "ഞൊടിയൻ . വൻതേൻ · Apis cerana indica",
       "tagline": "Deep amber and thick ",
