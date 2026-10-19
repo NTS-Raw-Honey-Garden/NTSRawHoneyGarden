@@ -94,12 +94,12 @@ window.SITE_CONFIG = {
   } /*DELIVERY-END*/,
 
   /* ---------- Payment ----------
-     "none"     = customer pays on delivery / by UPI after confirmation (current setup)
+     "none"     = customer pays by UPI after confirmation (current setup)
      "razorpay" = online payment (see documentation/06-future-features.md before switching) */
   payment: {
     provider: "none",
-    upiId: "ntshoneygarden@upi",   // Shown in confirmation as a payment option (leave "" to hide)
-    razorpayKeyId: ""              // PUBLIC key id only. Never put a secret key in this file.
+    upiId: "",   // Shown in confirmation as a payment option (leave "" to hide)
+    razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"              // PUBLIC key id only. Never put a secret key in this file.
   },
 
   /* ---------- SEO ---------- */
