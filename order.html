@@ -25,7 +25,7 @@
           <p class="breadcrumb"><a href="index.html">Home</a> / Order</p>
           <p class="eyebrow">Order or request</p>
           <h1>Get our honey <em class="accent">delivered.</em></h1>
-          <p class="lead" id="mode-note">We'll confirm with you before delivery.</p>
+          <p class="lead" id="mode-note">No online payment needed. We'll confirm with you before delivery.</p>
           <div class="order-switch" role="tablist" aria-label="Choose what you want to do" style="margin-top:26px">
             <button type="button" id="tab-order" role="tab" aria-selected="true" aria-controls="panel-order">Order honey now</button>
             <button type="button" id="tab-request" role="tab" aria-selected="false" aria-controls="panel-request">Request other items</button>
@@ -119,7 +119,9 @@
             <ul id="summary-lines" class="summary-lines"></ul>
             <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal">₹0</span></div>
             <div class="summary-row"><span>Delivery</span><span id="sum-delivery">—</span></div>
-            <p id="delivery-note" style="margin:-6px 0 10px;font-size:.78rem;color:var(--muted);line-height:1.35"></p>
+            <p id="delivery-note" style="margin:-6px 0 8px;font-size:.78rem;color:var(--muted);line-height:1.35"></p>
+            <ul id="delivery-savings" hidden style="list-style:none;margin:0 0 12px;padding:9px 11px;font-size:.8rem;
+                background:#eef4ea;color:#2f5a2a;border:1px solid #cfe0c6;border-radius:9px;line-height:1.35"></ul>
             <div class="summary-total"><span>Total</span><span id="sum-total">₹0</span></div>
             <div id="free-delivery" style="margin-top:14px;font-size:.86rem;color:var(--muted)">
               <div class="free-delivery-bar"><div></div></div><span></span>
