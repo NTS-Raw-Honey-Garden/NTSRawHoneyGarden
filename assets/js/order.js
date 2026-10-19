@@ -21,8 +21,8 @@
   var modeNote = document.getElementById("mode-note");
   if (modeNote) {
     modeNote.innerHTML = window.OrderAPI.hasBackend()
-      ? "No online payment needed. We'll call or WhatsApp you to confirm, then you can pay " + (C.payment.upiId ? "by UPI or " : "") + "on delivery."
-      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp. No online payment needed.";
+      ?  (C.payment.upiId ? "by UPI or " : "") + "on delivery."
+      : "After you submit, you'll get a reference number and a button to send the details to us on WhatsApp for enquiries";
   }
 
   /* ---------- Phone link in request sidebar ---------- */
