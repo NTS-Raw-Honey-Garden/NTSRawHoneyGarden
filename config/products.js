@@ -29,7 +29,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "id": "vanthen-rock-bee-honey",
       "name": " ഞൊടിയൻ . വൻതേൻ · ",
       "englishName": "ഞൊടിയൻ . വൻതേൻ · Apis cerana indica",
-      "tagline": "Deep amber, bold and full of character",
+      "tagline": "Deep amber and thick ",
       "variety": "ഞൊടിയൻ . വൻതേൻ ·Apis cerana indica",
       "source": "Bee colonies and the flowering trees around our garden",
       "description": "Our signature honey — thick, dark amber with a rich, lingering taste that changes gently with each season's flowering. Collected in small batches and bottled by hand at the garden.",
