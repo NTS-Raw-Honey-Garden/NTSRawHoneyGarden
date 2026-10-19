@@ -30,7 +30,7 @@ window.HONEY_PRODUCTS = /*JSON-START*/
       "name": " ഞൊടിയൻ . വൻതേൻ · ",
       "englishName": "ഞൊടിയൻ . വൻതേൻ · Apis cerana indica",
       "tagline": "Deep amber and thick ",
-      "variety": "ഞൊടിയൻ . വൻതേൻ ·Apis cerana indica",
+      "variety": "Apis cerana indica (Vann then)",
       "source": "Bee colonies and the flowering trees around our garden",
       "description": "Our signature honey — thick, dark amber with a rich, lingering taste that changes gently with each season's flowering. Collected in small batches and bottled by hand at the garden.",
       "badge": "Our signature",
