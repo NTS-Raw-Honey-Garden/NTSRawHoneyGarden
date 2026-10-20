@@ -125,7 +125,7 @@
           if (loaded === null || !window.Razorpay) return { status: "pending", reference: "" };
           return new Promise(function (resolve) {
             var rz = new window.Razorpay({
-              key: C.payment.razorpayKeyId,
+              key: serverOrder.razorpayKeyId || C.payment.razorpayKeyId,
               amount: Math.round(serverOrder.total * 100),
               currency: "INR",
               name: C.farmName,
