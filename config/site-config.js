@@ -90,7 +90,7 @@ window.SITE_CONFIG = {
   payment: {
     provider: "razorpay",
     upiId: "sudanvs@icici",
-    razorpayKeyId: "rzp_test_TpjzQxxIcYhPxa"
+    razorpayKeyId: "rzp_test_Tq7aJgeMRUcmiz"
   },
 
   /* ---------- SEO ---------- */
