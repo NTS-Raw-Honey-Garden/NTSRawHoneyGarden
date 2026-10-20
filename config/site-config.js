@@ -88,7 +88,7 @@ window.SITE_CONFIG = {
 
   /* ---------- Payment ---------- */
   payment: {
-    provider: "razorpay",
+    provider: "none",
     upiId: "sudanvs@icici",
     razorpayKeyId: "rzp_test_Tq7aJgeMRUcmiz"
   },
