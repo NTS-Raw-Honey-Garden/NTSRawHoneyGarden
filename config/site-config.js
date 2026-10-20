@@ -95,7 +95,7 @@ window.SITE_CONFIG = {
 
   /* ---------- SEO ---------- */
   siteUrl: "https://nts-raw-honey-garden.github.io/NTSRawHoneyGarden",
-  metaDescription: "Raw, pure, golden honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) honey in 250 g, 500 g and 1 kg. Order online.",
+  metaDescription: "Raw, pure, natural honey from our own garden hives in Kerala. വൻതേൻ (Vanthen) honey in 250 g, 500 g and 1 kg. Order online.",
 
   /* ---------- Analytics (optional) ---------- */
   analyticsId: ""
