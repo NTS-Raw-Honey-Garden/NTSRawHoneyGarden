@@ -382,6 +382,7 @@
         delivery: res.deliveryFee != null ? res.deliveryFee : s.totals.delivery,
         total: res.total != null ? res.total : s.totals.total,
         razorpayOrderId: res.razorpayOrderId,
+        razorpayKeyId: res.razorpayKeyId,   // public key id, sent by the backend
         emailSent: !!res.emailSent
       };
       var pay = window.Payments.current();
