@@ -99,7 +99,7 @@
 
   window.Payments = {
     none: {
-      label: "Pay on delivery or by UPI after we confirm",
+      label: "Pay by UPI after we confirm your order",
       collect: function () { return Promise.resolve({ status: "pending", reference: "" }); }
     },
 
@@ -109,8 +109,20 @@
     razorpay: {
       label: "Pay online (UPI, cards, netbanking)",
       collect: function (serverOrder, customer) {
-        if (!serverOrder.razorpayOrderId) return Promise.reject(new Error("Online payment is not set up on the server yet."));
-        return loadScript("https://checkout.razorpay.com/v1/checkout.js").then(function () {
+        /* The order is already saved by the time we get here, so a payment
+           problem must never fail it. If the server could not make a Razorpay
+           order (keys missing, Razorpay down), or the checkout script will not
+           load, fall back to "pending" — the customer pays by UPI after we
+           confirm, exactly as before. */
+        if (!serverOrder.razorpayOrderId) {
+          console.warn("No Razorpay order id from the server — falling back to pay-later.");
+          return Promise.resolve({ status: "pending", reference: "" });
+        }
+        return loadScript("https://checkout.razorpay.com/v1/checkout.js").catch(function (e) {
+          console.warn("Razorpay checkout script did not load — falling back to pay-later.", e);
+          return null;
+        }).then(function (loaded) {
+          if (loaded === null || !window.Razorpay) return { status: "pending", reference: "" };
           return new Promise(function (resolve) {
             var rz = new window.Razorpay({
               key: C.payment.razorpayKeyId,
@@ -131,6 +143,12 @@
                   .catch(function () { resolve({ status: "failed", reference: resp.razorpay_payment_id }); });
               },
               modal: { ondismiss: function () { resolve({ status: "pending", reference: "" }); } }
+            });
+            /* Card declined, UPI timeout, bank refusal: keep the order, mark it
+               unpaid, let us chase it by phone. */
+            if (rz.on) rz.on("payment.failed", function (resp) {
+              console.warn("Razorpay payment.failed", resp && resp.error);
+              resolve({ status: "failed", reference: (resp && resp.error && resp.error.metadata && resp.error.metadata.payment_id) || "" });
             });
             rz.open();
           });
