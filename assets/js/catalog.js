@@ -38,10 +38,11 @@
     firstInStock: function (p) {
       return p.sizes.filter(function (s) { return s.stock > 0; })[0] || p.sizes[0];
     },
+    /* Stock count is managed from the admin dashboard, not shown to customers.
+       Only "Sold out" is surfaced; in-stock quantities stay hidden. */
     stockText: function (size) {
       if (!size || !(size.stock > 0)) return { cls: "out", text: "Sold out — back next season" };
-      if (size.stock <= LOW_STOCK) return { cls: "low", text: "Only " + size.stock + " left" };
-      return { cls: "", text: "In stock · " + size.stock + " available" };
+      return { cls: "", text: "" };
     },
     /* Delivery fee rule (mirrored on the server, which has the final say). */
     /* ---------- Delivery: total weight × distance zone ----------
